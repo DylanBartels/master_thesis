@@ -27,6 +27,10 @@ tlmgr install sectsty
 
 Dylan Bartels - 10607072
 
+## Supervisor
+
+Jaap van Ginkel
+
 ## Acknowledgments
 
 * CargoLEdger
