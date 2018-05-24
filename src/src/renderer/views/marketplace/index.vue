@@ -63,15 +63,15 @@
         const driver = require('bigchaindb-driver')
 
         // Init connection
-        let bdb = new driver.Connection('https://test.bigchaindb.com/api/v1/', {
-          app_id: 'b65e44fe',
-          app_key: 'f5a123dba75e2f17d76a280957a14443'
+        const bdb = new driver.Connection(process.env.APP_URL, {
+          app_id: process.env.APP_ID,
+          app_key: process.env.APP_KEY
         })
 
         const conn = new driver.Connection(bdb)
         console.log(conn)
-        conn.searchAssets('g')
-          .then(assets => console.log('Found assets with serial number Bicycle Inc.:', assets))
+        conn.searchAssets('FtfTutorialAsset')
+          .then(response => console.log('Found assets with serial number Bicycle Inc.:', response))
       }
     }
   }

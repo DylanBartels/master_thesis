@@ -105,19 +105,6 @@
       }
     },
     methods: {
-      // // Possible to do loc instead of address format
-      // fetchLoc () {
-      //   const where = require('node-where')
-      //
-      //   where.is('173.194.33.104', (err, result) => {
-      //     if (err) {
-      //       this.error = err
-      //     } else {
-      //       this.form.loc.lat = result.get('lat')
-      //       this.form.loc.lng = result.get('lng')
-      //     }
-      //   })
-      // },
       insertForm () {
         const driver = require('bigchaindb-driver')
 
