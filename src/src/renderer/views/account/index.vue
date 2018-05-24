@@ -4,7 +4,7 @@
       {{ error }}
     </div>
 
-    <el-form ref="user" :model="user" label-width="120px">
+    <el-form ref="user" label-width="120px">
       <el-form-item label="Public Key">
         <el-form-item>{{ wallet.publickey }}</el-form-item>
       </el-form-item>
@@ -22,7 +22,10 @@
   export default {
     data () {
       return {
-        wallet: null,
+        wallet: {
+          publickey: '',
+          privatekey: ''
+        },
         loading: false,
         error: null
       }
@@ -32,7 +35,7 @@
     },
     methods: {
       fetchWallet () {
-        this.error = this.wallet = null
+        this.error = null
         this.loading = true
 
         getWallet().findOne({}, (err, wallet) => {
