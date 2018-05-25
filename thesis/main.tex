@@ -45,6 +45,66 @@ The definiton of trustless can be achieved if no entity is custodian of any proc
 
 \section{Test Setup}
 
+Nomenclature
+A = Begin actor
+B = End actor
+C = Transport actor
+D = Value equvalent of transport
+E = Transport cost
+F = Multisig wallet
+
+Assumptions:
+A, B, C got public/private keys
+
+Scenario A:
+\begin{enumerate}
+  \item A broadcasts request transport (A -> B)
+  \item C accepts transport
+  \begin{enumerate}
+    \item All 3 public keys are known, possible to create 3/3 F
+  \end{enumerate}
+  \item C picks up physical good at A
+  \begin{enumerate}
+    \item moment of exchange:
+    \begin{enumerate}
+      \item C puts value equivalent in F
+      \item A puts E in F
+      \item A gives physical good to C
+      \item A signs 1/3 F signature of outgoing (D + E) to C (total signature aggregation: 1/3)
+    \end{enumerate}
+  \end{enumerate}
+  \item C delivers physical good at B
+  \begin{enumerate}
+    \item moment of exchange:
+    \begin{enumerate}
+      \item C gives physical good to B
+      \item B signs 1/3 F signature of outgoing (D + E) to C (total signature aggregation: 2/3)
+    \end{enumerate}
+  \end{enumerate}
+  \item C can redeem (D + E) whenever he want (total signature aggregation: 3/3)
+\end{enumerate}
+
+Bottlenecks:
+\begin{enumerate}
+  \item Relies on 0-confirmation at 3.a, if C broadcast another transaction before mined there is a chance of the other transaction being mined. Not all cryptocurrencies got this double spending behaviour. Some are reliable.
+  \item B losing private key after 3.a, funds will be locked.
+\end{enumerate}
+
+Scenario B:
+A broadcasts request transport (A -> B)
+To counteract spamming
+A pays insertion fee
+C accepts transport
+All 3 public keys are known, possible to create 3/3 F
+C puts value equivalent in F
+C delivers physical good at B
+moment of exchange:
+C gives physical good to B
+B signs 1/3 F signature of outgoing (D + E) to C (total signature aggregation: 2/3)
+C can redeem (D + E) whenever he want (total signature aggregation: 3/3)
+Bottlenecks:
+Where does the insertion fee go
+
 \subsection{Architecture}
 
 \subsection{Actor Balance}
