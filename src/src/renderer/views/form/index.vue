@@ -66,147 +66,138 @@
         <el-input v-model="form.dropoff.public_key" placeholder="Public key"></el-input>
       </el-form-item>
       <el-form-item style="margin-top: 22px;">
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="checkForm">Create</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+  import { getConnection, getWallet } from '../../datastore'
+
   export default {
     data () {
       return {
         error: null,
+        formErrors: [],
         activeName: '1',
-        txid: '',
         form: {
-          value_category: '',
+          value_category: null,
           pickup: {
-            name: '',
-            address: '',
-            postal: '',
-            city: '',
-            country: '',
-            date_day: '',
-            date_time: ''
+            name: null,
+            address: null,
+            postal: null,
+            city: null,
+            country: null,
+            date_day: null,
+            date_time: null,
+            public_key: null
           },
           dropoff: {
-            name: '',
-            address: '',
-            postal: '',
-            city: '',
-            country: '',
-            date_day: '',
-            date_time: '',
-            public_key: ''
+            name: null,
+            address: null,
+            postal: null,
+            city: null,
+            country: null,
+            date_day: null,
+            date_time: null,
+            public_key: null
           }
         }
       }
     },
+    created () {
+      this.fetchWallet()
+    },
     methods: {
       insertForm () {
-        const driver = require('bigchaindb-driver')
+        return new Promise((resolve, reject) => {
+          const driver = require('bigchaindb-driver')
+          const BCDBKeypair = getWallet().bigchainDB
+          const conn = getConnection()
 
-        // Init connection
-        const bdb = new driver.Connection(process.env.APP_URL, {
-          app_id: process.env.APP_ID,
-          app_key: process.env.APP_KEY
-        })
-
-        // Create a new keypair for Alice and Bob
-        const alice = new driver.Ed25519Keypair()
-        const bob = new driver.Ed25519Keypair()
-
-        console.log('Alice: ', alice.publicKey)
-        console.log('Bob: ', bob.publicKey)
-
-        // Create asset
-        const assetdata = {
-          'value_category': this.form.value_category,
-          'pickup': {
-            'name': this.form.pickup.name,
-            'address': this.form.pickup.address,
-            'postal': this.form.pickup.postal,
-            'city': this.form.pickup.city,
-            'country': this.form.pickup.country,
-            'date_day': this.form.pickup.date_day,
-            'date_time': this.form.pickup.date_time
-          },
-          'dropoff': {
-            'name': this.form.dropoff.name,
-            'address': this.form.dropoff.address,
-            'postal': this.form.dropoff.postal,
-            'city': this.form.dropoff.city,
-            'country': this.form.dropoff.country,
-            'date_day': this.form.dropoff.date_day,
-            'date_time': this.form.dropoff.date_time,
-            'public_key': this.form.dropoff.public_key
+          const assetData = {
+            'type': 'logisticsContractCompleteData',
+            'value_category': this.form.value_category,
+            'date': new Date().toISOString(),
+            'pickup': {
+              'name': this.form.pickup.name,
+              'address': this.form.pickup.address,
+              'postal': this.form.pickup.postal,
+              'city': this.form.pickup.city,
+              'country': this.form.pickup.country,
+              'date_day': this.form.pickup.date_day,
+              'date_time': this.form.pickup.date_time,
+              'public_key': this.form.pickup.public_key
+            },
+            'dropoff': {
+              'name': this.form.dropoff.name,
+              'address': this.form.dropoff.address,
+              'postal': this.form.dropoff.postal,
+              'city': this.form.dropoff.city,
+              'country': this.form.dropoff.country,
+              'date_day': this.form.dropoff.date_day,
+              'date_time': this.form.dropoff.date_time,
+              'public_key': this.form.dropoff.public_key
+            }
           }
-        }
-        const metadata = {'planet': 'earth'}
 
-        // Creating transaction
-        const txCreateAliceSimple = driver.Transaction.makeCreateTransaction(
-          assetdata,
-          metadata,
+          const metaData = {
+            'action': 'Introduced'
+          }
 
-          // A transaction needs an output
-          [ driver.Transaction.makeOutput(
-            driver.Transaction.makeEd25519Condition(alice.publicKey))
-          ],
-          alice.publicKey
-        )
+          // Create a CREATE transaction.
+          const introduceFoodItemToMarketTransaction = driver.Transaction.makeCreateTransaction(
+            assetData,
+            metaData,
+            [driver.Transaction.makeOutput(
+              driver.Transaction.makeEd25519Condition(BCDBKeypair.publickey))],
+            BCDBKeypair.publickey
+          )
 
-        // Signing transaction
-        const txCreateAliceSimpleSigned = driver.Transaction.signTransaction(txCreateAliceSimple, alice.privateKey)
+          // We sign the transaction
+          const signedTransaction = driver.Transaction.signTransaction(introduceFoodItemToMarketTransaction,
+            BCDBKeypair.privatekey)
 
-        // Sending
-        const conn = new driver.Connection(bdb)
-        this.txid = txCreateAliceSimpleSigned.id
-
-        conn.postTransactionCommit(txCreateAliceSimpleSigned)
-          .then(retrievedTx => console.log('Transaction', retrievedTx.id, 'successfully posted.'))
-          // With the postTransactionCommit if the response is correct, then the transaction
-          // is valid and commited to a block
-
-          // Transfer bicycle to Bob
-          .then(() => {
-            const txTransferBob = driver.Transaction.makeTransferTransaction(
-              // signedTx to transfer and output index
-              [{ tx: txCreateAliceSimpleSigned, output_index: 0 }],
-              [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(bob.publicKey))],
-              // metadata
-              {price: '100 euro'}
-            )
-
-            // Sign with alice's private key
-            let txTransferBobSigned = driver.Transaction.signTransaction(txTransferBob, alice.privateKey)
-            console.log('Posting signed transaction: ', txTransferBobSigned)
-
-            // Post with commit so transaction is validated and included in a block
-            return conn.postTransactionCommit(txTransferBobSigned)
+          // Post the transaction to the network
+          conn.postTransactionCommit(signedTransaction).then(postedTransaction => {
+            resolve(postedTransaction)
+          }).catch(err => {
+            reject(err)
           })
-          .then(res => {
-            console.log('Response from BDB server:', res)
-            return res.id
-          })
-          .then(tx => {
-            console.log('Is Bob the owner?', tx['outputs'][0]['public_keys'][0] === bob.publicKey)
-            console.log('Was Alice the previous owner?', tx['inputs'][0]['owners_before'][0] === alice.publicKey)
-          })
-          // Search for asset based on the serial number of the bicycle
-          .then(() => conn.searchAssets('Bicycle Inc.'))
-          .then(assets => console.log('Found assets with serial number Bicycle Inc.:', assets))
+        })
       },
-      onSubmit () {
+      checkForm () {
+        if (
+          this.form.value_category && this.form.pickup.name &&
+          this.form.pickup.address && this.form.pickup.postal &&
+          this.form.pickup.city && this.form.pickup.country &&
+          this.form.pickup.date_day && this.form.pickup.date_time &&
+          this.form.dropoff.name && this.form.dropoff.address &&
+          this.form.dropoff.postal && this.form.dropoff.city &&
+          this.form.dropoff.country && this.form.dropoff.date_day &&
+          this.form.dropoff.date_time && this.form.dropoff.public_key
+        ) return this.submitForm()
+        else {
+          this.$message({
+            message: 'Form is missing data!',
+            type: 'warning'
+          })
+        }
+      },
+      submitForm () {
         this.insertForm()
         this.$message('submitted!')
       },
-      onCancel () {
-        this.$message({
-          message: 'cancel!',
-          type: 'warning'
+      fetchWallet () {
+        this.error = null
+
+        getWallet().findOne({}, (err, wallet) => {
+          if (err) {
+            this.error = err.toString()
+          } else {
+            this.form.pickup.public_key = wallet.bitcoin.publickey
+          }
         })
       }
     }
