@@ -74,11 +74,13 @@
 
 <script>
   import { getConnection, getWallet } from '../../datastore'
+  const driver = require('bigchaindb-driver')
 
   export default {
     data () {
       return {
         error: null,
+        BCDBPublickey: null,
         formErrors: [],
         activeName: '1',
         form: {
@@ -112,12 +114,8 @@
     methods: {
       insertForm () {
         return new Promise((resolve, reject) => {
-          const driver = require('bigchaindb-driver')
-          const BCDBKeypair = getWallet().bigchainDB
-          const conn = getConnection()
-
           const assetData = {
-            'type': 'logisticsContractCompleteData',
+            'type': process.env.BCDB_META_TAG,
             'value_category': this.form.value_category,
             'date': new Date().toISOString(),
             'pickup': {
@@ -143,24 +141,24 @@
           }
 
           const metaData = {
-            'action': 'Introduced'
+            'phase': 'introduced'
           }
 
           // Create a CREATE transaction.
-          const introduceFoodItemToMarketTransaction = driver.Transaction.makeCreateTransaction(
+          const introduceLogisticsTransaction = driver.Transaction.makeCreateTransaction(
             assetData,
             metaData,
-            [driver.Transaction.makeOutput(
-              driver.Transaction.makeEd25519Condition(BCDBKeypair.publickey))],
-            BCDBKeypair.publickey
+            // Transaction output
+            [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(this.BCDBPublickey))],
+            this.BCDBPublickey
           )
 
           // We sign the transaction
-          const signedTransaction = driver.Transaction.signTransaction(introduceFoodItemToMarketTransaction,
-            BCDBKeypair.privatekey)
+          const signedTransaction = driver.Transaction.signTransaction(
+            introduceLogisticsTransaction, this.BCDBPublickey)
 
           // Post the transaction to the network
-          conn.postTransactionCommit(signedTransaction).then(postedTransaction => {
+          getConnection().postTransactionCommit(signedTransaction).then(postedTransaction => {
             resolve(postedTransaction)
           }).catch(err => {
             reject(err)
@@ -197,6 +195,7 @@
             this.error = err.toString()
           } else {
             this.form.pickup.public_key = wallet.bitcoin.publickey
+            this.BCDBPublickey = wallet.bigchainDB.publickey
           }
         })
       }

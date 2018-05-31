@@ -17,6 +17,7 @@
                 <p>Address: {{ scope.row.data.pickup.address }}</p>
                 <p>Postal: {{ scope.row.data.pickup.postal }}</p>
                 <p>Day: {{ filterTimeCreated(scope.row.data.pickup.date_day) }}</p>
+                <p>Public Key: {{ scope.row.data.pickup.public_key }}</p>
               </div>
             </el-col>
             <el-col :span="12">
@@ -80,7 +81,7 @@
       },
       getAllAssets () {
         return new Promise((resolve) => {
-          this.connection.searchAssets('logisticsContractCompleteData').then(response => {
+          this.connection.searchAssets(process.env.BCDB_META_TAG).then(response => {
             resolve(response)
           })
         }).catch(error => {
