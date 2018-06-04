@@ -51,9 +51,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <div style="margin-top: 20px">
-      <el-button type="primary" @click="onAccept">Accept Contract</el-button>
-    </div>
+    <!--<div style="margin-top: 20px">-->
+      <!--<el-button type="primary" @click="onAccept">Accept Contract</el-button>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -65,8 +65,7 @@
       return {
         listLoading: true,
         allContracts: [],
-        currentRow: null,
-        connection: getConnection()
+        currentRow: null
       }
     },
     created () {
@@ -81,7 +80,7 @@
       },
       getAllAssets () {
         return new Promise((resolve) => {
-          this.connection.searchAssets(process.env.BCDB_META_TAG).then(response => {
+          getConnection().searchAssets(process.env.BCDB_META_TAG).then(response => {
             resolve(response)
           })
         }).catch(error => {

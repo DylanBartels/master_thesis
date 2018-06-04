@@ -141,7 +141,8 @@
           }
 
           const metaData = {
-            'phase': 'introduced'
+            'phase': 'introduced',
+            'date': new Date().toISOString()
           }
 
           // Create a CREATE transaction.

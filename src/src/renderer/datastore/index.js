@@ -13,11 +13,13 @@ export function getConnection () {
 }
 
 export function initLocalDB () {
+  // Initiates db with first run, consists out of keypair for btc and BCdb, assigns role of sending actor.
   setUserDataPath()
+  const dbName = 'sending.db'
 
   if (!(fs.existsSync(remote.app.getPath('userData')))) {
     let wallet = new Datastore({
-      filename: path.join(remote.app.getPath('userData'), 'wallet.db'),
+      filename: path.join(remote.app.getPath('userData'), dbName),
       autoload: true
     })
 
@@ -29,11 +31,10 @@ export function initLocalDB () {
   }
 }
 
-export function getWallet () {
+export function getWallet (role) {
   const db = {}
-  db.wallet = new Datastore(path.join(remote.app.getPath('userData'), process.env.WALLET))
+  db.wallet = new Datastore(path.join(remote.app.getPath('userData'), role.concat('.db')))
   db.wallet.loadDatabase()
-  console.log(process.env.WALLET)
   return db.wallet
 }
 

@@ -1,68 +1,67 @@
 <template>
   <div class="app-container">
-    <div v-if="error" class="error">
-      {{ error }}
-    </div>
+    <!--<div v-if="error" class="error">-->
+      <!--{{ error }}-->
+    <!--</div>-->
 
     <h2>My Orders</h2>
     <el-row>
       <h3>Requested</h3>
-      <!--<el-table :data="myContracts"-->
-                <!--element-loading-text="Loading"-->
-                <!--fit-->
-                <!--highlight-current-row>-->
-                <!--&lt;!&ndash;@current-change="handleCurrentChange">&ndash;&gt;-->
-        <!--<el-table-column align="center"width="95" type="expand">-->
-          <!--<template slot-scope="scope">-->
-            <!--<el-row :gutter="20">-->
-              <!--<el-col :span="12">-->
-                <!--<div class="grid-content bg-purple">-->
-                  <!--<h2>Pickup</h2>-->
-                  <!--<p>Country: {{ scope.row.data.pickup.country }}</p>-->
-                  <!--<p>City: {{ scope.row.data.pickup.city }}</p>-->
-                  <!--<p>Address: {{ scope.row.data.pickup.address }}</p>-->
-                  <!--<p>Postal: {{ scope.row.data.pickup.postal }}</p>-->
-                  <!--<p>Day: {{ filterTimeCreated(scope.row.data.pickup.date_day) }}</p>-->
-                  <!--<p>Public Key: {{ scope.row.data.pickup.public_key }}</p>-->
-                <!--</div>-->
-              <!--</el-col>-->
-              <!--<el-col :span="12">-->
-                <!--<div class="grid-content bg-purple">-->
-                  <!--<h2>Dropoff</h2>-->
-                  <!--<p>Country: {{ scope.row.data.dropoff.country }}</p>-->
-                  <!--<p>City: {{ scope.row.data.dropoff.city }}</p>-->
-                  <!--<p>Address: {{ scope.row.data.dropoff.address }}</p>-->
-                  <!--<p>Postal: {{ scope.row.data.dropoff.postal }}</p>-->
-                  <!--<p>Day: {{ filterTimeCreated(scope.row.data.dropoff.date_day) }}</p>-->
-                  <!--<p>Public Key: {{ scope.row.data.dropoff.public_key }}</p>-->
-                <!--</div>-->
-              <!--</el-col>-->
-            <!--</el-row>-->
-          <!--</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="Value Category">-->
-          <!--<template slot-scope="scope">-->
-            <!--€{{scope.row.data.value_category}}-->
-          <!--</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="Pickup City" width="150" align="center">-->
-          <!--<template slot-scope="scope">-->
-            <!--<span>{{scope.row.data.pickup.city}}</span>-->
-          <!--</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column align="center" prop="created_at" label="Created At" width="200">-->
-          <!--<template slot-scope="scope">-->
-            <!--<i class="el-icon-time"></i>-->
-            <!--<span>{{filterTimeCreated(scope.row.data.date)}}</span>-->
-          <!--</template>-->
-        <!--</el-table-column>-->
-      <!--</el-table>-->
-      <h2>Accepted</h2>
-      <el-col :span="24">
-        <div class="grid-content bg-purple">
-          <p>My Accepted transport</p>
-        </div>
-      </el-col>
+      <el-table :data="myContracts"
+                element-loading-text="Loading"
+                fit
+                highlight-current-row
+                @current-change="handleCurrentChange">
+        <el-table-column align="center"width="95" type="expand">
+          <template slot-scope="scope">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <div class="grid-content bg-purple">
+                  <h2>Pickup</h2>
+                  <p>Country: {{ scope.row.data.pickup.country }}</p>
+                  <p>City: {{ scope.row.data.pickup.city }}</p>
+                  <p>Address: {{ scope.row.data.pickup.address }}</p>
+                  <p>Postal: {{ scope.row.data.pickup.postal }}</p>
+                  <p>Day: {{ scope.row.data.pickup.date_day.slice(0, -14) }}</p>
+                  <p>Public Key: {{ scope.row.data.pickup.public_key }}</p>
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div class="grid-content bg-purple">
+                  <h2>Dropoff</h2>
+                  <p>Country: {{ scope.row.data.dropoff.country }}</p>
+                  <p>City: {{ scope.row.data.dropoff.city }}</p>
+                  <p>Address: {{ scope.row.data.dropoff.address }}</p>
+                  <p>Postal: {{ scope.row.data.dropoff.postal }}</p>
+                  <p>Day: {{ scope.row.data.dropoff.date_day.slice(0, -14) }}</p>
+                  <p>Public Key: {{ scope.row.data.dropoff.public_key }}</p>
+                </div>
+              </el-col>
+            </el-row>
+          </template>
+        </el-table-column>
+        <el-table-column label="Value Category">
+          <template slot-scope="scope">
+            €{{scope.row.data.value_category}}
+          </template>
+        </el-table-column>
+        <el-table-column label="Pickup City" width="150" align="center">
+          <template slot-scope="scope">
+            <span>{{scope.row.data.pickup.city}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="created_at" label="Created At" width="200">
+          <template slot-scope="scope">
+            <i class="el-icon-time"></i>
+            <span>{{ scope.row.data.date.slice(0, -14) }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div style="margin-top: 20px">
+        <el-input placeholder="Please input Transporting public key" v-model="transporter" style="width: 300px"></el-input>
+        <el-button type="primary" @click="onExchange">Exchange Ownership</el-button>
+      </div>
     </el-row>
 
     <h2>Keys</h2>
@@ -76,8 +75,8 @@
       </el-col>
       <el-col :span="21">
         <div class="grid-content bg-purple-light">
-          <p>{{wallet.bitcoin.publickey}}</p>
-          <p>{{wallet.bitcoin.privatekey}}</p>
+          <p>{{ $store.state.wallet.bitcoin.publickey }}</p>
+          <p>{{ $store.state.wallet.bitcoin.privatekey }}</p>
         </div>
       </el-col>
     </el-row>
@@ -91,111 +90,93 @@
       </el-col>
       <el-col :span="21">
         <div class="grid-content bg-purple-light">
-          <p>{{wallet.bigchainDB.publickey}}</p>
-          <p>{{wallet.bigchainDB.privatekey}}</p>
+          <p>{{ $store.state.wallet.bigchainDB.publickey }}</p>
+          <p>{{ $store.state.wallet.bigchainDB.privatekey }}</p>
         </div>
       </el-col>
     </el-row>
 
     <h1>Change Actor</h1>
     <el-row>
-      <el-select v-model="actorWallet">
-        <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-        </el-option>
-      </el-select>
+      <ul v-for="role in $store.state.wallet.roles">
+        <el-button @click="ChangeActor(role.role)">{{ role.role }}</el-button>
+      </ul>
     </el-row>
+
   </div>
 </template>
 
 <script>
-  import { getWallet, getConnection } from '../../datastore'
+  import { mapActions, mapGetters } from 'vuex'
+  import { getConnection } from '../../datastore'
+  import store from '../../store'
 
   export default {
     data () {
       return {
-        wallet: {
-          bitcoin: {
-            publickey: '',
-            privatekey: ''
-          },
-          bigchainDB: {
-            publickey: '',
-            privatekey: ''
-          }
-        },
         loading: false,
         error: null,
-        connection: getConnection(),
-        myContracts: null,
-        options: [{
-          value: 'sending.db',
-          label: 'sending'
-        }, {
-          value: 'receiving.db',
-          label: 'receiving'
-        }, {
-          value: 'transporting.db',
-          label: 'transporting'
-        }],
-        actorWallet: process.env.WALLET
+        myContracts: [],
+        transporter: null,
+        currentRow: null
       }
     },
-    created () {
-      this.fetchWallet()
-      this.loadAllContracts()
-    },
-    watch: {
-      actorWallet: function () {
-        process.env.WALLET = this.value
-        this.fetchWallet()
-      }
+    computed: {
+      ...mapGetters(['assets'])
     },
     methods: {
-      fetchWallet () {
-        this.error = null
-        this.loading = true
+      ...mapActions(['ChangeActor']),
+      onExchange () {
+        getConnection().listTransactions(this.currentRow.id).then(response => {
+          return this.transferAsset(response[response.length - 1], this.transporter)
+        }).then(response => {
+          console.log(response)
+        })
+      },
+      transferAsset (selectedAsset, receiverPublicKey) {
+        const driver = require('bigchaindb-driver')
 
-        getWallet().findOne({}, (err, wallet) => {
-          this.loading = false
-          if (err) {
-            this.error = err.toString()
-          } else {
-            this.wallet = wallet
+        return new Promise((resolve, reject) => {
+          // Construct metadata.
+          const metaData = {
+            'action': 'being transported',
+            'date': new Date().toISOString()
           }
-        })
-      },
-      loadAllContracts () {
-        this.getAllAssets().then(response => {
-          this.myContracts = this.filterContracts(response)
-        })
-      },
-      getAllAssets () {
-        return new Promise((resolve) => {
-          // todo: get pub key from wallet (this.wallet.bitcoin.publickey
-          this.connection.searchAssets('1JwFR2GcjpceGJJGfPws4VWacybp6SJMpu').then(response => {
-            resolve(response)
+          // Construct the new transaction
+          const transferTransaction = driver.Transaction.makeTransferTransaction(
+            // The previous transaction to be chained upon.
+            [{ tx: selectedAsset, output_index: 0 }],
+            // The (poutput) condition to be fullfilled in the next transaction.
+            [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(receiverPublicKey))],
+            // Metadata
+            metaData
+          )
+          // Sign the new transaction.
+          const signedTransaction = driver.Transaction.signTransaction(
+            transferTransaction, store.state.wallet.bigchainDB.privatekey)
+
+          // Post the transaction.
+          getConnection().postTransactionCommit(signedTransaction).then(successfullyPostedTransaction => {
+            resolve(successfullyPostedTransaction)
+          }).catch(error => {
+            reject(error)
           })
-        }).catch(error => {
-          console.log(error)
         })
       },
-      filterContracts (allContracts) {
-        // todo: make filter which filters on own public key
-        return allContracts
-      },
-      filterTimeCreated (e) {
-        return e.slice(0, -14)
+      handleCurrentChange (val) {
+        this.currentRow = val
+      }
+    },
+    watch: {
+      assets (promise) {
+        promise.then(result => (this.myContracts = result))
       }
     }
   }
 </script>
 
-<style scoped>
-  .line{
-    text-align: center;
+<style>
+  ul {
+    float: left;
   }
 </style>
