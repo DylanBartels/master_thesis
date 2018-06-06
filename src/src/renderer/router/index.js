@@ -58,14 +58,27 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/account',
+    path: '/identity',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Account',
-        component: () => import('@/views/account/index'),
-        meta: { title: 'Account', icon: 'account' }
+        name: 'Identity',
+        component: () => import('@/views/identity/index'),
+        meta: { title: 'Identity', icon: 'identity' }
+      }
+    ]
+  },
+
+  {
+    path: '/exchange',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Exchange',
+        component: () => import('@/views/exchange/index'),
+        meta: { title: 'Exchange', icon: 'exchange' }
       }
     ]
   }

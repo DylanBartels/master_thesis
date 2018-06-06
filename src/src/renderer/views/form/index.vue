@@ -73,14 +73,15 @@
 </template>
 
 <script>
-  import { getConnection, getWallet } from '../../datastore'
+  import store from '../../store'
+  import { getConnection } from '../../datastore'
   const driver = require('bigchaindb-driver')
 
   export default {
     data () {
       return {
         error: null,
-        BCDBPublickey: null,
+        BCDBPublickey: store.state.wallet.bigchainDB.publickey,
         formErrors: [],
         activeName: '1',
         form: {
@@ -93,7 +94,7 @@
             country: null,
             date_day: null,
             date_time: null,
-            public_key: null
+            public_key: store.state.wallet.bitcoin.publickey
           },
           dropoff: {
             name: null,
@@ -107,9 +108,6 @@
           }
         }
       }
-    },
-    created () {
-      this.fetchWallet()
     },
     methods: {
       insertForm () {
@@ -187,18 +185,6 @@
       submitForm () {
         this.insertForm()
         this.$message('submitted!')
-      },
-      fetchWallet () {
-        this.error = null
-
-        getWallet().findOne({}, (err, wallet) => {
-          if (err) {
-            this.error = err.toString()
-          } else {
-            this.form.pickup.public_key = wallet.bitcoin.publickey
-            this.BCDBPublickey = wallet.bigchainDB.publickey
-          }
-        })
       }
     }
   }

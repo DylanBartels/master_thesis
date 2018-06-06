@@ -1,4 +1,4 @@
-import { getWallet, getConnection } from '../../datastore'
+import { getWallet } from '../../datastore'
 
 const wallet = {
   state: {
@@ -11,8 +11,8 @@ const wallet = {
       privatekey: '3ieCPv9vJyvPecyvFnLpyrKRr3L3QAswoFcSDMMeNoFt'
     },
     assets: null,
+    myAssets: null,
     role: 'sending',
-    connection: null,
     error: null,
     roles: [{
       value: 'sending.db',
@@ -38,23 +38,12 @@ const wallet = {
     },
     SET_ROLE: (state, role) => {
       state.role = role
-    },
-    SET_ASSETS: (state) => {
-      state.assets = new Promise((resolve) => {
-        getConnection().searchAssets(state.bitcoin.publickey).then(response => {
-          resolve(response)
-        })
-      }).catch(error => {
-        console.log(error)
-        return []
-      })
     }
   },
   actions: {
     ChangeActor ({ commit }, role) {
-      commit('SET_ROLE', role)
       commit('SET_WALLET', getWallet(role))
-      commit('SET_ASSETS')
+      commit('SET_ROLE', role)
     }
   }
 }
