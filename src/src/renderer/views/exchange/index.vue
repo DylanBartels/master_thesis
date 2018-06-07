@@ -111,6 +111,11 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div style="margin-top: 20px">
+        <el-input placeholder="Please input Transporting public key" v-model="transporter" style="width: 300px"></el-input>
+        <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
+      </div>
     </el-row>
 
     <el-row>
@@ -235,10 +240,8 @@
       },
       getPickup () {
         getConnection().listOutputs(store.state.wallet.bigchainDB.publickey).then(response => {
-          // console.log(response)
           for (let transaction in response) {
             getConnection().getTransaction(response[transaction].transaction_id).then(response => {
-              // console.log(response['asset'])
               this.myPickup.push(response['asset'])
             })
           }
@@ -255,15 +258,12 @@
       },
       getTransport () {
         getConnection().listOutputs(store.state.wallet.bigchainDB.publickey).then(response => {
-          // console.log(response)
           for (let transaction in response) {
             getConnection().getTransaction(response[transaction].transaction_id).then(response => {
-              console.log(response['id'])
-              if (response['metadata']['type'] === 'being transported') {
-                getConnection().listTransactions(response['id']).then(response => {
-                  console.log(response)
+              if (response['metadata']['action'] === 'being transported') {
+                getConnection().getTransaction(response['asset']['id']).then(response => {
+                  this.myTransport.push(response['asset'])
                 })
-                // this.myTransport.push(response['asset'])
               }
             })
           }
