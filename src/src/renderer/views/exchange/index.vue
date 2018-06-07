@@ -54,7 +54,8 @@
       </el-table>
 
       <div style="margin-top: 20px">
-        <el-input placeholder="Please input Transporting public key" v-model="transporter" style="width: 300px"></el-input>
+        <el-input placeholder="Input Transporting public key" v-model="transporter" style="width: 300px"></el-input>
+        <el-input placeholder="Input hex encoded bitcoin transaction" v-model="transporterHex" style="width: 300px"></el-input>
         <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
       </div>
     </el-row>
@@ -188,6 +189,7 @@
         myDropoff: [],
         myTransport: [],
         transporter: null,
+        transporterHex: null,
         currentRow: null,
         testP: this.getPickup(),
         testD: this.getDropoff(),

@@ -40,6 +40,11 @@
       </ul>
     </el-row>
 
+    <h1>Generate new local keypairs</h1>
+    <div style="margin-top: 20px">
+      <el-button type="primary" @click="genKeypairs">Generate</el-button>
+    </div>
+
   </div>
 </template>
 
@@ -58,7 +63,12 @@
       }
     },
     computed: {...mapGetters(['role', 'bigchainDB', 'bitcoin'])},
-    methods: {...mapActions(['ChangeActor'])}
+    methods: {
+      ...mapActions(['ChangeActor']),
+      genKeypairs () {
+        return null
+      }
+    }
   }
 </script>
 

@@ -51,21 +51,28 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--<div style="margin-top: 20px">-->
-      <!--<el-button type="primary" @click="onAccept">Accept Contract</el-button>-->
-    <!--</div>-->
+    <div style="margin-top: 20px">
+      <el-button type="primary" @click="onAccept">Accept Contract</el-button>
+    </div>
   </div>
 </template>
 
 <script>
   import { getConnection } from '../../datastore'
+  import store from '../../store'
+  const bitcoinLib = require('bitcoinjs-lib')
 
   export default {
     data () {
       return {
         listLoading: true,
         allContracts: [],
-        currentRow: null
+        currentRow: null,
+        testK: bitcoinLib.ECPair.makeRandom(),
+        testMul: this.createMultiSig(
+          bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex'),
+          bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex')
+        )
       }
     },
     created () {
@@ -91,11 +98,43 @@
         this.currentRow = val
       },
       onAccept () {
+        this.createMultiSig(
+          store.state.wallet.bitcoin.publickey,
+          this.currentRow['data']['dropoff']['public_key']
+        )
         this.$message('Contract accepted!')
       },
       filterTimeCreated (e) {
         return e.slice(0, -14)
+      },
+      createMultiSig (myKey, dropoffKey) {
+        console.log(myKey)
+        console.log(dropoffKey)
+        let pubKeys = [
+          myKey,
+          dropoffKey
+        ].map(function (hex) { return Buffer.from(hex, 'hex') })
+
+        let witnessScript = bitcoinLib.script.multisig.output.encode(2, pubKeys)
+        let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
+        let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
+        return bitcoinLib.address.fromOutputScript(scriptPubKey)
       }
+      // createSegwitP2SH () {
+      //   let keyPair = bitcoinLib.ECPair.makeRandom().getAddress()
+      //   let redeemScript = bitcoinLib.script.witnessPubKeyHash.output.encode(bitcoinLib.crypto.hash160(keyPair))
+      //   let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
+      //   let address = bitcoinLib.address.fromOutputScript(scriptPubKey)
+      //   return address
+      // },
+      // currentCreateKeypair () {
+      //   const BTCKeyPair = bitcoinLib.ECPair.makeRandom()
+      //   const BTCAddress = BTCKeyPair.getAddress()
+      //   const publickey = BTCAddress.toString()
+      //   const privatekey = BTCKeyPair.toWIF().toString()
+      //   console.log(publickey)
+      //   console.log(privatekey)
+      // }
     }
   }
 </script>

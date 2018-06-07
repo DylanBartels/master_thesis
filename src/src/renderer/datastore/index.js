@@ -44,14 +44,13 @@ function setUserDataPath () {
 }
 
 function generateWallet () {
-  const bitcoin = require('bitcoinjs-lib')
+  const bitcoinLib = require('bitcoinjs-lib')
   const driver = require('bigchaindb-driver')
   // const bip39 = require('bip39')
 
-  const BTCKeyPair = bitcoin.ECPair.makeRandom()
+  const BTCKeyPair = bitcoinLib.ECPair.makeRandom()
   const BTCAddress = BTCKeyPair.getAddress()
   const BCDBkeyPair = new driver.Ed25519Keypair()
-  // const BCDBkeyPair = new driver.Ed25519Keypair(bip39.mnemonicToSeed('keyseed').slice(0, 32))
 
   return {
     bitcoin: {
