@@ -15,19 +15,8 @@ export function getConnection () {
 export function initLocalDB () {
   // Initiates db with first run, consists out of keypair for btc and BCdb, assigns role of sending actor.
   setUserDataPath()
-  const dbName = 'sending.db'
-
   if (!(fs.existsSync(remote.app.getPath('userData')))) {
-    let wallet = new Datastore({
-      filename: path.join(remote.app.getPath('userData'), dbName),
-      autoload: true
-    })
-
-    wallet.insert(generateWallet(), function (err) {
-      if (err) {
-        console.log(err.stack)
-      }
-    })
+    generateRoles()
   }
 }
 
@@ -43,18 +32,34 @@ function setUserDataPath () {
   remote.app.setPath('userData', openLogisticsPath)
 }
 
+export function generateRoles () {
+  const roles = ['sending', 'receiving', 'transporting']
+
+  for (let i = 0; i < roles.length; i++) {
+    let wallet = new Datastore({
+      filename: path.join(remote.app.getPath('userData'), roles[i].concat('.db')),
+      autoload: true
+    })
+
+    wallet.insert(generateWallet(), function (err) {
+      if (err) {
+        console.log(err.stack)
+      }
+    })
+  }
+}
+
 function generateWallet () {
   const bitcoinLib = require('bitcoinjs-lib')
   const driver = require('bigchaindb-driver')
-  // const bip39 = require('bip39')
 
   const BTCKeyPair = bitcoinLib.ECPair.makeRandom()
-  const BTCAddress = BTCKeyPair.getAddress()
   const BCDBkeyPair = new driver.Ed25519Keypair()
 
   return {
     bitcoin: {
-      publickey: BTCAddress.toString(),
+      address: BTCKeyPair.getAddress().toString(),
+      publickey: BTCKeyPair.getPublicKeyBuffer().toString('hex'),
       privatekey: BTCKeyPair.toWIF().toString()
     },
     bigchainDB: {

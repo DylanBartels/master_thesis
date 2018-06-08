@@ -2,14 +2,9 @@ import { getWallet } from '../../datastore'
 
 const wallet = {
   state: {
-    bitcoin: {
-      publickey: '1JwFR2GcjpceGJJGfPws4VWacybp6SJMpu',
-      privatekey: 'L1GDPWnYqyX4XJi4SWwJdqq5W8Gbh3crEu6UCZS9fAy1fTTx5NeJ'
-    },
-    bigchainDB: {
-      publickey: '7TYbke3EJrfNNNyFTPA3Xd7iitvY3J9Se5zGG5nN7A6d',
-      privatekey: '3ieCPv9vJyvPecyvFnLpyrKRr3L3QAswoFcSDMMeNoFt'
-    },
+    bitcoin: '',
+    bigchainDB: '',
+    balance: '',
     assets: null,
     myAssets: null,
     role: 'sending',
@@ -27,12 +22,15 @@ const wallet = {
   },
   mutations: {
     SET_WALLET: (state, wallet) => {
+      const request = require('request')
+
       wallet.findOne({}, (err, wallet) => {
         if (err) {
           state.error = err
         } else {
           state.bitcoin = wallet.bitcoin
           state.bigchainDB = wallet.bigchainDB
+          state.balance = request('https://insight.bitpay.com/api/addr/' + wallet.bitcoin.address)
         }
       })
     },

@@ -27,8 +27,21 @@ export const constantRouterMap = [
     hidden: true,
     children: [{
       path: 'dashboard',
-      component: () => import('@/views/marketplace/index')
+      component: () => import('@/views/identity/index')
     }]
+  },
+
+  {
+    path: '/identity',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Identity',
+        component: () => import('@/views/identity/index'),
+        meta: { title: 'Identity', icon: 'identity' }
+      }
+    ]
   },
 
   {
@@ -53,19 +66,6 @@ export const constantRouterMap = [
         name: 'Form',
         component: () => import('@/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/identity',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Identity',
-        component: () => import('@/views/identity/index'),
-        meta: { title: 'Identity', icon: 'identity' }
       }
     ]
   },

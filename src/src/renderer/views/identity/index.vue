@@ -6,14 +6,17 @@
       <h3>Bitcoin</h3>
       <el-col :span="3">
         <div class="grid-content bg-purple">
+          <p>Address:</p>
           <p>Public Key:</p>
           <p>Private Key:</p>
         </div>
       </el-col>
       <el-col :span="21">
         <div class="grid-content bg-purple-light">
+          <p>{{ $store.state.wallet.bitcoin.address }}</p>
           <p>{{ $store.state.wallet.bitcoin.publickey }}</p>
           <p>{{ $store.state.wallet.bitcoin.privatekey }}</p>
+          <!--<p>{{ $store.state.wallet.balance }}</p>-->
         </div>
       </el-col>
     </el-row>
@@ -35,14 +38,17 @@
 
     <h1>Change Actor</h1>
     <el-row>
-      <ul v-for="role in $store.state.wallet.roles">
-        <el-button @click="ChangeActor(role.role)">{{ role.role }}</el-button>
+      <ul v-for="role in $store.state.wallet.roles" style="padding-left: 0 !important;
+    padding-right: 30px;">
+        <el-button @click="ChangeActor(role.role)">
+          {{ role.role }}
+        </el-button>
       </ul>
     </el-row>
 
     <h1>Generate new local keypairs</h1>
     <div style="margin-top: 20px">
-      <el-button type="primary" @click="genKeypairs">Generate</el-button>
+      <el-button @click="genKeypairs">Generate</el-button>
     </div>
 
   </div>
@@ -50,6 +56,7 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
+  // import generateRoles from '../../datastore'
 
   export default {
     data () {
@@ -62,10 +69,11 @@
         currentRow: null
       }
     },
-    computed: {...mapGetters(['role', 'bigchainDB', 'bitcoin'])},
+    computed: {...mapGetters(['role', 'bigchainDB', 'bitcoin', 'balance'])},
     methods: {
       ...mapActions(['ChangeActor']),
       genKeypairs () {
+        // generateRoles()
         return null
       }
     }

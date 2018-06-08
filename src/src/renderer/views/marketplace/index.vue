@@ -68,15 +68,16 @@
         listLoading: true,
         allContracts: [],
         currentRow: null,
-        testK: bitcoinLib.ECPair.makeRandom(),
-        testMul: this.createMultiSig(
-          bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex'),
-          bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex')
-        )
+        testMultiSig: null,
+        testEquivalentTransaction: null
       }
     },
     created () {
       this.loadAllContracts()
+      this.createMultiSig(
+        bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex'),
+        bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex')
+      )
     },
     methods: {
       loadAllContracts () {
@@ -108,8 +109,6 @@
         return e.slice(0, -14)
       },
       createMultiSig (myKey, dropoffKey) {
-        console.log(myKey)
-        console.log(dropoffKey)
         let pubKeys = [
           myKey,
           dropoffKey
@@ -118,23 +117,28 @@
         let witnessScript = bitcoinLib.script.multisig.output.encode(2, pubKeys)
         let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
         let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
-        return bitcoinLib.address.fromOutputScript(scriptPubKey)
+        this.buildEquivalentTransaction(bitcoinLib.address.fromOutputScript(scriptPubKey))
+        this.testMultiSig = bitcoinLib.address.fromOutputScript(scriptPubKey)
+      },
+      buildEquivalentTransaction (multiSigAddress) {
+        const satoshis = 1
+        const previousTransactionHash = ''
+        const payeeAddress = ''
+        const privateKey = ''
+        let txb = new bitcoinLib.TransactionBuilder()
+        // Add the input (who is paying):
+        // [previous transaction hash, index of the output to use]
+        txb.addInput(previousTransactionHash, 1)
+        // Add the output (who to pay to):
+        // [payee's address, amount in satoshis]
+        txb.addOutput(payeeAddress, satoshis)
+        txb.sign(0, privateKey)
+        console.log(txb.build().toHex())
+        // let hexTX = txb.build().toHex()
+        // $.post('http://btc.blockr.io/api/v1/tx/push', {'hex': hexTX}, function (data) {
+        //   console.log(data)
+        // })
       }
-      // createSegwitP2SH () {
-      //   let keyPair = bitcoinLib.ECPair.makeRandom().getAddress()
-      //   let redeemScript = bitcoinLib.script.witnessPubKeyHash.output.encode(bitcoinLib.crypto.hash160(keyPair))
-      //   let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
-      //   let address = bitcoinLib.address.fromOutputScript(scriptPubKey)
-      //   return address
-      // },
-      // currentCreateKeypair () {
-      //   const BTCKeyPair = bitcoinLib.ECPair.makeRandom()
-      //   const BTCAddress = BTCKeyPair.getAddress()
-      //   const publickey = BTCAddress.toString()
-      //   const privatekey = BTCKeyPair.toWIF().toString()
-      //   console.log(publickey)
-      //   console.log(privatekey)
-      // }
     }
   }
 </script>
