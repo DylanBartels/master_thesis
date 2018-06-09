@@ -9,6 +9,7 @@
           <p>Address:</p>
           <p>Public Key:</p>
           <p>Private Key:</p>
+          <p>Balance:</p>
         </div>
       </el-col>
       <el-col :span="21">
@@ -16,7 +17,7 @@
           <p>{{ $store.state.wallet.bitcoin.address }}</p>
           <p>{{ $store.state.wallet.bitcoin.publickey }}</p>
           <p>{{ $store.state.wallet.bitcoin.privatekey }}</p>
-          <!--<p>{{ $store.state.wallet.balance }}</p>-->
+          <p>{{ balance }} bitcoin</p>
         </div>
       </el-col>
     </el-row>
@@ -56,7 +57,8 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
-  // import generateRoles from '../../datastore'
+  import store from '../../store'
+  import axios from 'axios'
 
   export default {
     data () {
@@ -66,15 +68,32 @@
         myContracts: [],
         myContracts2: [],
         transporter: null,
-        currentRow: null
+        currentRow: null,
+        balance: ''
       }
     },
-    computed: {...mapGetters(['role', 'bigchainDB', 'bitcoin', 'balance'])},
+    computed: {...mapGetters(['role', 'bigchainDB', 'bitcoin'])},
     methods: {
       ...mapActions(['ChangeActor']),
       genKeypairs () {
-        // generateRoles()
+        // TODO: create function
         return null
+      },
+      setBalance () {
+        this.loading = true
+        axios.get('https://insight.bitpay.com/api/addr/' + store.state.wallet.bitcoin.address)
+          .then((response) => {
+            this.loading = false
+            this.balance = response.data.balance
+          }, (error) => {
+            this.loading = false
+            this.error = error
+          })
+      }
+    },
+    watch: {
+      bitcoin: function () {
+        this.setBalance()
       }
     }
   }

@@ -60,6 +60,7 @@
 <script>
   import { getConnection } from '../../datastore'
   import store from '../../store'
+  import axios from 'axios'
   const bitcoinLib = require('bitcoinjs-lib')
 
   export default {
@@ -69,15 +70,14 @@
         allContracts: [],
         currentRow: null,
         testMultiSig: null,
-        testEquivalentTransaction: null
+        testEquivalentTransaction: null,
+        error: null,
+        utxo: null
       }
     },
     created () {
       this.loadAllContracts()
-      this.createMultiSig(
-        bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex'),
-        bitcoinLib.ECPair.makeRandom().getPublicKeyBuffer().toString('hex')
-      )
+      this.getAddressUTXO()
     },
     methods: {
       loadAllContracts () {
@@ -99,11 +99,11 @@
         this.currentRow = val
       },
       onAccept () {
-        this.createMultiSig(
-          store.state.wallet.bitcoin.publickey,
-          this.currentRow['data']['dropoff']['public_key']
-        )
-        this.$message('Contract accepted!')
+        this.$message('Contract accepted! Go pick up the package and bring the following transaction script:' +
+          this.buildEquivalentTransaction(this.createMultiSig(
+            store.state.wallet.bitcoin.publickey,
+            this.currentRow['data']['dropoff']['public_key']
+          )))
       },
       filterTimeCreated (e) {
         return e.slice(0, -14)
@@ -118,26 +118,45 @@
         let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
         let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
         this.buildEquivalentTransaction(bitcoinLib.address.fromOutputScript(scriptPubKey))
-        this.testMultiSig = bitcoinLib.address.fromOutputScript(scriptPubKey)
+        console.log(bitcoinLib.address.fromOutputScript(scriptPubKey))
+        return bitcoinLib.address.fromOutputScript(scriptPubKey)
       },
       buildEquivalentTransaction (multiSigAddress) {
-        const satoshis = 1
-        const previousTransactionHash = ''
-        const payeeAddress = ''
-        const privateKey = ''
+        const equivalentSatoshis = 1
+        const previousTransactionHash = this.utxo['txid']
+        const payeeAddress = multiSigAddress
+        const privateKey = store.state.wallet.bitcoin.privatekey
+        const outputIndex = this.utxo['vout']
+
+        console.log('Beginning building transaction')
         let txb = new bitcoinLib.TransactionBuilder()
+        console.log(txb)
         // Add the input (who is paying):
         // [previous transaction hash, index of the output to use]
-        txb.addInput(previousTransactionHash, 1)
+        txb.addInput(previousTransactionHash, outputIndex)
+        console.log(txb)
         // Add the output (who to pay to):
         // [payee's address, amount in satoshis]
-        txb.addOutput(payeeAddress, satoshis)
+        txb.addOutput(payeeAddress, equivalentSatoshis)
+        console.log(txb)
+        // Initialize a private key using WIF
+        // var privateKeyWIF = 'L1uyy5qTuGrVXrmrsvHWHgVzW9kKdrp27wBC7Vs6nZDTF2BRUVwy'
+        // var keyPair = bitcoin.ECPair.fromWIF(privateKeyWIF)
+
         txb.sign(0, privateKey)
-        console.log(txb.build().toHex())
-        // let hexTX = txb.build().toHex()
+        console.log(txb)
         // $.post('http://btc.blockr.io/api/v1/tx/push', {'hex': hexTX}, function (data) {
         //   console.log(data)
         // })
+        return txb.build().toHex()
+      },
+      getAddressUTXO () {
+        axios.get('https://insight.bitpay.com/api/addr/' + store.state.wallet.bitcoin.address + '/utxo')
+          .then((response) => {
+            this.utxo = response.data[0]
+          }, (error) => {
+            this.error = error
+          })
       }
     }
   }
