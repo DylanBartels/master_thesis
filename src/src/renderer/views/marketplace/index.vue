@@ -69,10 +69,9 @@
         listLoading: true,
         allContracts: [],
         currentRow: null,
-        testMultiSig: null,
-        testEquivalentTransaction: null,
         error: null,
-        utxo: null
+        utxo: null,
+        txb: null
       }
     },
     created () {
@@ -117,37 +116,29 @@
         let witnessScript = bitcoinLib.script.multisig.output.encode(2, pubKeys)
         let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
         let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
-        this.buildEquivalentTransaction(bitcoinLib.address.fromOutputScript(scriptPubKey))
-        console.log(bitcoinLib.address.fromOutputScript(scriptPubKey))
         return bitcoinLib.address.fromOutputScript(scriptPubKey)
       },
       buildEquivalentTransaction (multiSigAddress) {
-        const equivalentSatoshis = 1
+        const equivalentSatoshis = this.utxo['satoshis'] - 2000
         const previousTransactionHash = this.utxo['txid']
         const payeeAddress = multiSigAddress
-        const privateKey = store.state.wallet.bitcoin.privatekey
         const outputIndex = this.utxo['vout']
 
-        console.log('Beginning building transaction')
         let txb = new bitcoinLib.TransactionBuilder()
-        console.log(txb)
         // Add the input (who is paying):
         // [previous transaction hash, index of the output to use]
         txb.addInput(previousTransactionHash, outputIndex)
-        console.log(txb)
         // Add the output (who to pay to):
         // [payee's address, amount in satoshis]
         txb.addOutput(payeeAddress, equivalentSatoshis)
-        console.log(txb)
         // Initialize a private key using WIF
-        // var privateKeyWIF = 'L1uyy5qTuGrVXrmrsvHWHgVzW9kKdrp27wBC7Vs6nZDTF2BRUVwy'
-        // var keyPair = bitcoin.ECPair.fromWIF(privateKeyWIF)
+        let keyPair = bitcoinLib.ECPair.fromWIF(store.state.wallet.bitcoin.privatekey)
 
-        txb.sign(0, privateKey)
-        console.log(txb)
+        txb.sign(0, keyPair)
         // $.post('http://btc.blockr.io/api/v1/tx/push', {'hex': hexTX}, function (data) {
         //   console.log(data)
         // })
+        this.txb = txb.build().toHex()
         return txb.build().toHex()
       },
       getAddressUTXO () {

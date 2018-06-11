@@ -33,6 +33,22 @@
                 </div>
               </el-col>
             </el-row>
+            <el-row>
+              <div style="margin-top: 20px">
+                <el-form ref="pickup" :model="pickup" label-width="120px">
+                  <el-form-item label="BigChainDB public key">
+                    <el-input v-model="pickup.bigchainPublicKey"></el-input>
+                  </el-form-item>
+                  <el-form-item label="Bitcoin public key">
+                    <el-input v-model="pickup.bitcoinPublicKey"></el-input>
+                  </el-form-item>
+                  <el-form-item label="Transaction Script">
+                    <el-input v-model="pickup.transactionScript"></el-input>
+                  </el-form-item>
+                </el-form>
+                <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
+              </div>
+            </el-row>
           </template>
         </el-table-column>
         <el-table-column label="Value Category">
@@ -53,11 +69,6 @@
         </el-table-column>
       </el-table>
 
-      <div style="margin-top: 20px">
-        <el-input placeholder="Input Transporting public key" v-model="transporter" style="width: 300px"></el-input>
-        <el-input placeholder="Input hex encoded bitcoin transaction" v-model="transporterHex" style="width: 300px"></el-input>
-        <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
-      </div>
     </el-row>
 
     <el-row>
@@ -93,6 +104,19 @@
                 </div>
               </el-col>
             </el-row>
+            <el-row>
+              <div style="margin-top: 20px">
+                <el-form ref="dropoff" :model="dropoff" label-width="120px">
+                  <el-form-item label="BigChainDB public key">
+                    <el-input v-model="dropoff.bigchainPublicKey"></el-input>
+                  </el-form-item>
+                  <el-form-item label="Bitcoin public key">
+                    <el-input v-model="dropoff.bitcoinPublicKey"></el-input>
+                  </el-form-item>
+                </el-form>
+                <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
+              </div>
+            </el-row>
           </template>
         </el-table-column>
         <el-table-column label="Value Category">
@@ -112,11 +136,6 @@
           </template>
         </el-table-column>
       </el-table>
-
-      <div style="margin-top: 20px">
-        <el-input placeholder="Please input Transporting public key" v-model="transporter" style="width: 300px"></el-input>
-        <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
-      </div>
     </el-row>
 
     <el-row>
@@ -180,6 +199,8 @@
   import { mapGetters } from 'vuex'
   import { getConnection } from '../../datastore'
   import store from '../../store'
+  import axios from 'axios'
+  const bitcoinLib = require('bitcoinjs-lib')
 
   export default {
     data () {
@@ -188,21 +209,46 @@
         myPickup: [],
         myDropoff: [],
         myTransport: [],
-        transporter: null,
-        transporterHex: null,
         currentRow: null,
-        testP: this.getPickup(),
-        testD: this.getDropoff(),
-        testT: this.getTransport()
+        utxo: null,
+        error: null,
+        txb: null,
+        myId: null,
+        pickup: {
+          bigchainPublicKey: null,
+          bitcoinPublicKey: null,
+          transactionScript: null
+        },
+        dropoff: {
+          bigchainPublicKey: null,
+          bitcoinPublicKey: null
+        }
       }
     },
     computed: {
       ...mapGetters(['role', 'bigchainDB', 'bitcoin'])
     },
+    created () {
+      this.getAddressUTXO()
+      this.getTransport()
+      this.getDropoff()
+      this.getPickup()
+    },
     methods: {
       onExchange () {
-        getConnection().listTransactions(this.currentRow.id).then(response => {
-          return this.transferAsset(response[response.length - 1], this.transporter)
+        getConnection().listTransactions(this.myId).then(response => {
+          console.log(response)
+          // Transfers asset
+          // this.transferAsset(response[response.length - 1], this.pickup.bigchainPublicKey)
+          // Posts transport cost in multisig transaction
+          this.postTransactionScript(this.buildTransportcostTransaction(
+            this.createMultiSig(
+              this.pickup.bitcoinPublicKey,
+              this.currentRow.data.dropoff.public_key
+            ))
+          )
+          // Posts equivalent cost in multisig transaction
+          // this.postTransactionScript(this.pickup.transactionScript)
         }).then(response => {
           console.log(response)
         })
@@ -245,6 +291,7 @@
           for (let transaction in response) {
             getConnection().getTransaction(response[transaction].transaction_id).then(response => {
               this.myPickup.push(response['asset'])
+              this.myId = response.id
             })
           }
         })
@@ -270,6 +317,47 @@
             })
           }
         })
+      },
+      createMultiSig (myKey, dropoffKey) {
+        let pubKeys = [
+          myKey,
+          dropoffKey
+        ].map(function (hex) { return Buffer.from(hex, 'hex') })
+
+        let witnessScript = bitcoinLib.script.multisig.output.encode(2, pubKeys)
+        let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
+        let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
+        return bitcoinLib.address.fromOutputScript(scriptPubKey)
+      },
+      buildTransportcostTransaction (multiSigAddress) {
+        const equivalentSatoshis = this.utxo['satoshis'] - 2000
+        const previousTransactionHash = this.utxo['txid']
+        const payeeAddress = multiSigAddress
+        const outputIndex = this.utxo['vout']
+
+        let txb = new bitcoinLib.TransactionBuilder()
+        // Add the input (who is paying):
+        // [previous transaction hash, index of the output to use]
+        txb.addInput(previousTransactionHash, outputIndex)
+        // Add the output (who to pay to):
+        // [payee's address, amount in satoshis]
+        txb.addOutput(payeeAddress, equivalentSatoshis)
+        // Initialize a private key using WIF
+        let keyPair = bitcoinLib.ECPair.fromWIF(store.state.wallet.bitcoin.privatekey)
+
+        txb.sign(0, keyPair)
+        return txb.build().toHex()
+      },
+      getAddressUTXO () {
+        axios.get('https://insight.bitpay.com/api/addr/' + store.state.wallet.bitcoin.address + '/utxo')
+          .then((response) => {
+            this.utxo = response.data[0]
+          }, (error) => {
+            this.error = error
+          })
+      },
+      postTransactionScript (hexTX) {
+        axios.post('https://insight.bitpay.com/api/tx/send', {'rawtx': hexTX})
       }
     }
   }
