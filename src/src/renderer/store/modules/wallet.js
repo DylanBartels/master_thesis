@@ -30,8 +30,16 @@ const wallet = {
         } else {
           state.bitcoin = wallet.bitcoin
           state.bigchainDB = wallet.bigchainDB
-          state.utxo = getAddressUTXO(wallet.bitcoin.address)
-          state.balance = getBalance(wallet.bitcoin.address) + ' Bitcoin'
+          getAddressUTXO(wallet.bitcoin.address).then((response) => {
+            state.utxo = response.data[0]
+          }, (error) => {
+            state.utxo = error
+          })
+          getBalance(wallet.bitcoin.address).then((response) => {
+            state.balance = response.data.balance + ' Bitcoin'
+          }, (error) => {
+            state.balance = error
+          })
         }
       })
     },

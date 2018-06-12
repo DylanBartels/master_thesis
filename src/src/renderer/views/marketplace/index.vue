@@ -58,11 +58,10 @@
 </template>
 
 <script>
+  // import { mapGetters } from 'vuex'
   import { getConnection } from '../../datastore'
-  import { createMultiSig } from "../../util/bitcoin"
+  import { createMultiSig, buildTransaction } from '../../util/bitcoin'
   import store from '../../store'
-  import axios from 'axios'
-  const bitcoinLib = require('bitcoinjs-lib')
 
   export default {
     data () {
@@ -71,14 +70,13 @@
         allContracts: [],
         currentRow: null,
         error: null,
-        utxo: null,
         txb: null
       }
     },
     created () {
       this.loadAllContracts()
-      this.getAddressUTXO()
     },
+    // computed: {...mapGetters(['utxo', 'bitcoin'])},
     methods: {
       loadAllContracts () {
         this.getAllAssets().then(response => {
@@ -100,41 +98,13 @@
       },
       onAccept () {
         this.$message('Contract accepted! Go pick up the package and bring the following transaction script:' +
-          this.buildEquivalentTransaction(createMultiSig(
+          buildTransaction(store.state.wallet.bitcoin.privatekey, createMultiSig(
             store.state.wallet.bitcoin.publickey,
             this.currentRow['data']['dropoff']['public_key']
-          )))
+          ), store.state.wallet.utxo))
       },
       filterTimeCreated (e) {
         return e.slice(0, -14)
-      },
-      buildEquivalentTransaction (multiSigAddress) {
-        const equivalentSatoshis = this.utxo['satoshis'] - 2000
-        const previousTransactionHash = this.utxo['txid']
-        const payeeAddress = multiSigAddress
-        const outputIndex = this.utxo['vout']
-
-        let txb = new bitcoinLib.TransactionBuilder()
-        // Add the input (who is paying):
-        // [previous transaction hash, index of the output to use]
-        txb.addInput(previousTransactionHash, outputIndex)
-        // Add the output (who to pay to):
-        // [payee's address, amount in satoshis]
-        txb.addOutput(payeeAddress, equivalentSatoshis)
-        // Initialize a private key using WIF
-        let keyPair = bitcoinLib.ECPair.fromWIF(store.state.wallet.bitcoin.privatekey)
-
-        txb.sign(0, keyPair)
-        this.txb = txb.build().toHex()
-        return txb.build().toHex()
-      },
-      getAddressUTXO () {
-        axios.get('https://insight.bitpay.com/api/addr/' + store.state.wallet.bitcoin.address + '/utxo')
-          .then((response) => {
-            this.utxo = response.data[0]
-          }, (error) => {
-            this.error = error
-          })
       }
     }
   }
