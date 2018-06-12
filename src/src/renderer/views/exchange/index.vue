@@ -198,8 +198,8 @@
 <script>
   import { mapGetters } from 'vuex'
   import { getConnection } from '../../datastore'
+  import { postTransactionScript } from '../../util/bitcoin'
   import store from '../../store'
-  import axios from 'axios'
   const bitcoinLib = require('bitcoinjs-lib')
 
   export default {
@@ -210,7 +210,7 @@
         myDropoff: [],
         myTransport: [],
         currentRow: null,
-        utxo: null,
+        utxo: store.state.wallet.utxo,
         error: null,
         txb: null,
         myId: null,
@@ -229,7 +229,6 @@
       ...mapGetters(['role', 'bigchainDB', 'bitcoin'])
     },
     created () {
-      this.getAddressUTXO()
       this.getTransport()
       this.getDropoff()
       this.getPickup()
@@ -241,7 +240,7 @@
           // Transfers asset
           // this.transferAsset(response[response.length - 1], this.pickup.bigchainPublicKey)
           // Posts transport cost in multisig transaction
-          this.postTransactionScript(this.buildTransportcostTransaction(
+          postTransactionScript(this.buildTransportcostTransaction(
             this.createMultiSig(
               this.pickup.bitcoinPublicKey,
               this.currentRow.data.dropoff.public_key
@@ -347,17 +346,6 @@
 
         txb.sign(0, keyPair)
         return txb.build().toHex()
-      },
-      getAddressUTXO () {
-        axios.get('https://insight.bitpay.com/api/addr/' + store.state.wallet.bitcoin.address + '/utxo')
-          .then((response) => {
-            this.utxo = response.data[0]
-          }, (error) => {
-            this.error = error
-          })
-      },
-      postTransactionScript (hexTX) {
-        axios.post('https://insight.bitpay.com/api/tx/send', {'rawtx': hexTX})
       }
     }
   }

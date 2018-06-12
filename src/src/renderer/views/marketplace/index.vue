@@ -59,6 +59,7 @@
 
 <script>
   import { getConnection } from '../../datastore'
+  import { createMultiSig } from "../../util/bitcoin"
   import store from '../../store'
   import axios from 'axios'
   const bitcoinLib = require('bitcoinjs-lib')
@@ -99,24 +100,13 @@
       },
       onAccept () {
         this.$message('Contract accepted! Go pick up the package and bring the following transaction script:' +
-          this.buildEquivalentTransaction(this.createMultiSig(
+          this.buildEquivalentTransaction(createMultiSig(
             store.state.wallet.bitcoin.publickey,
             this.currentRow['data']['dropoff']['public_key']
           )))
       },
       filterTimeCreated (e) {
         return e.slice(0, -14)
-      },
-      createMultiSig (myKey, dropoffKey) {
-        let pubKeys = [
-          myKey,
-          dropoffKey
-        ].map(function (hex) { return Buffer.from(hex, 'hex') })
-
-        let witnessScript = bitcoinLib.script.multisig.output.encode(2, pubKeys)
-        let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
-        let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
-        return bitcoinLib.address.fromOutputScript(scriptPubKey)
       },
       buildEquivalentTransaction (multiSigAddress) {
         const equivalentSatoshis = this.utxo['satoshis'] - 2000
@@ -135,9 +125,6 @@
         let keyPair = bitcoinLib.ECPair.fromWIF(store.state.wallet.bitcoin.privatekey)
 
         txb.sign(0, keyPair)
-        // $.post('http://btc.blockr.io/api/v1/tx/push', {'hex': hexTX}, function (data) {
-        //   console.log(data)
-        // })
         this.txb = txb.build().toHex()
         return txb.build().toHex()
       },

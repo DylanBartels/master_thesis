@@ -1,4 +1,5 @@
 import { getWallet } from '../../datastore'
+import { getAddressUTXO, getBalance } from '../../util/bitcoin'
 
 const wallet = {
   state: {
@@ -6,7 +7,9 @@ const wallet = {
     bigchainDB: '',
     assets: null,
     myAssets: null,
-    role: 'sending',
+    utxo: [],
+    balance: '',
+    currentRole: 'sending',
     error: null,
     roles: [{
       value: 'sending.db',
@@ -27,11 +30,13 @@ const wallet = {
         } else {
           state.bitcoin = wallet.bitcoin
           state.bigchainDB = wallet.bigchainDB
+          state.utxo = getAddressUTXO(wallet.bitcoin.address)
+          state.balance = getBalance(wallet.bitcoin.address) + ' Bitcoin'
         }
       })
     },
     SET_ROLE: (state, role) => {
-      state.role = role
+      state.currentRole = role
     }
   },
   actions: {

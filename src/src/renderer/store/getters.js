@@ -3,6 +3,7 @@ const getters = {
   device: state => state.app.device,
   bitcoin: state => state.wallet.bitcoin,
   bigchainDB: state => state.wallet.bigchainDB,
-  role: state => state.wallet.role
+  roles: state => state.wallet.roles,
+  balance: state => state.wallet.balance
 }
 export default getters

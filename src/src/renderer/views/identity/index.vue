@@ -14,10 +14,10 @@
       </el-col>
       <el-col :span="21">
         <div class="grid-content bg-purple-light">
-          <p>{{ $store.state.wallet.bitcoin.address }}</p>
-          <p>{{ $store.state.wallet.bitcoin.publickey }}</p>
-          <p>{{ $store.state.wallet.bitcoin.privatekey }}</p>
-          <p>{{ balance }} bitcoin</p>
+          <p>{{ bitcoin.address }}</p>
+          <p>{{ bitcoin.publickey }}</p>
+          <p>{{ bitcoin.privatekey }}</p>
+          <p>{{ balance }}</p>
         </div>
       </el-col>
     </el-row>
@@ -31,15 +31,15 @@
       </el-col>
       <el-col :span="21">
         <div class="grid-content bg-purple-light">
-          <p>{{ $store.state.wallet.bigchainDB.publickey }}</p>
-          <p>{{ $store.state.wallet.bigchainDB.privatekey }}</p>
+          <p>{{ bigchainDB.publickey }}</p>
+          <p>{{ bigchainDB.privatekey }}</p>
         </div>
       </el-col>
     </el-row>
 
     <h1>Change Actor</h1>
     <el-row>
-      <ul v-for="role in $store.state.wallet.roles" style="padding-left: 0 !important;
+      <ul v-for="role in roles" style="padding-left: 0 !important;
     padding-right: 30px;">
         <el-button @click="ChangeActor(role.role)">
           {{ role.role }}
@@ -57,8 +57,6 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
-  import store from '../../store'
-  import axios from 'axios'
 
   export default {
     data () {
@@ -68,32 +66,15 @@
         myContracts: [],
         myContracts2: [],
         transporter: null,
-        currentRow: null,
-        balance: ''
+        currentRow: null
       }
     },
-    computed: {...mapGetters(['role', 'bigchainDB', 'bitcoin'])},
+    computed: {...mapGetters(['roles', 'bigchainDB', 'bitcoin', 'balance'])},
     methods: {
       ...mapActions(['ChangeActor']),
       genKeypairs () {
         // TODO: create function
         return null
-      },
-      setBalance () {
-        this.loading = true
-        axios.get('https://insight.bitpay.com/api/addr/' + store.state.wallet.bitcoin.address)
-          .then((response) => {
-            this.loading = false
-            this.balance = response.data.balance
-          }, (error) => {
-            this.loading = false
-            this.error = error
-          })
-      }
-    },
-    watch: {
-      bitcoin: function () {
-        this.setBalance()
       }
     }
   }
