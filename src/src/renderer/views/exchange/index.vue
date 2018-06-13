@@ -46,7 +46,7 @@
                     <el-input v-model="pickup.transactionScript"></el-input>
                   </el-form-item>
                 </el-form>
-                <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
+                <el-button type="primary" @click="onExchangePickup">Exchange With Transporter</el-button>
               </div>
             </el-row>
           </template>
@@ -114,7 +114,7 @@
                     <el-input v-model="dropoff.bitcoinPublicKey"></el-input>
                   </el-form-item>
                 </el-form>
-                <el-button type="primary" @click="onExchange">Exchange With Transporter</el-button>
+                <el-button type="primary" @click="onExchangeDropoff">Exchange With Transporter</el-button>
               </div>
             </el-row>
           </template>
@@ -198,9 +198,8 @@
 <script>
   import { mapGetters } from 'vuex'
   import { getConnection } from '../../datastore'
-  import { postTransactionScript } from '../../util/bitcoin'
+  import { postTransactionScript, createMultiSig, buildTransaction, buildMultiSigTransaction } from '../../util/bitcoin'
   import store from '../../store'
-  const bitcoinLib = require('bitcoinjs-lib')
 
   export default {
     data () {
@@ -210,10 +209,8 @@
         myDropoff: [],
         myTransport: [],
         currentRow: null,
-        utxo: store.state.wallet.utxo,
         error: null,
         txb: null,
-        myId: null,
         pickup: {
           bigchainPublicKey: null,
           bitcoinPublicKey: null,
@@ -226,7 +223,7 @@
       }
     },
     computed: {
-      ...mapGetters(['role', 'bigchainDB', 'bitcoin'])
+      ...mapGetters(['role', 'bigchainDB', 'bitcoin', 'utxo'])
     },
     created () {
       this.getTransport()
@@ -234,23 +231,44 @@
       this.getPickup()
     },
     methods: {
-      onExchange () {
-        getConnection().listTransactions(this.myId).then(response => {
+      onExchangePickup () {
+        getConnection().listTransactions(this.currentRow.id).then(response => {
           console.log(response)
           // Transfers asset
           // this.transferAsset(response[response.length - 1], this.pickup.bigchainPublicKey)
           // Posts transport cost in multisig transaction
-          postTransactionScript(this.buildTransportcostTransaction(
-            this.createMultiSig(
-              this.pickup.bitcoinPublicKey,
-              this.currentRow.data.dropoff.public_key
-            ))
+          postTransactionScript(
+            buildTransaction(
+              store.state.wallet.bitcoin.privatekey,
+              createMultiSig(
+                this.pickup.bitcoinPublicKey,
+                this.currentRow.data.dropoff.public_key
+              ),
+              store.state.wallet.utxo
+            )
           )
           // Posts equivalent cost in multisig transaction
           // this.postTransactionScript(this.pickup.transactionScript)
         }).then(response => {
           console.log(response)
         })
+      },
+      onExchangeDropoff () {
+        this.$alert('Contract completed! You can redeem your reward by signing the following transaction script: ' +
+          buildMultiSigTransaction(
+            store.state.wallet.bitcoin.privatekey,
+            this.dropoff.bitcoinPublicKey,
+            store.state.wallet.bitcoin.publickey
+          ),
+        'Exchange asset', {}
+        )
+        // 1.sign multisig transaction
+        return null
+      },
+      onRedeem () {
+        // 1. sign multisig transaction and broadcast
+        // 2. signasset to dropoff public key
+        return null
       },
       transferAsset (selectedAsset, receiverPublicKey) {
         const driver = require('bigchaindb-driver')
@@ -286,28 +304,27 @@
         this.currentRow = val
       },
       getPickup () {
-        getConnection().listOutputs(store.state.wallet.bigchainDB.publickey).then(response => {
-          for (let transaction in response) {
-            getConnection().getTransaction(response[transaction].transaction_id).then(response => {
-              this.myPickup.push(response['asset'])
-              this.myId = response.id
-            })
+        getConnection().searchAssets(store.state.wallet.bitcoin.publickey).then(response => {
+          for (let i = 0; i < response.length; i++) {
+            if (response[i]['data']['pickup']['public_key'] === store.state.wallet.bitcoin.publickey) {
+              this.myPickup.push(response[i])
+            }
           }
         })
       },
       getDropoff () {
         getConnection().searchAssets(store.state.wallet.bitcoin.publickey).then(response => {
-          for (let transaction in response) {
-            if (response[transaction]['data']['dropoff']['public_key'] === store.state.wallet.bitcoin.publickey) {
-              this.myDropoff.push(response[transaction])
+          for (let i = 0; i < response.length; i++) {
+            if (response[i]['data']['dropoff']['public_key'] === store.state.wallet.bitcoin.publickey) {
+              this.myDropoff.push(response[i])
             }
           }
         })
       },
       getTransport () {
         getConnection().listOutputs(store.state.wallet.bigchainDB.publickey).then(response => {
-          for (let transaction in response) {
-            getConnection().getTransaction(response[transaction].transaction_id).then(response => {
+          for (let i = 0; i < response.length; i++) {
+            getConnection().getTransaction(response[i].transaction_id).then(response => {
               if (response['metadata']['action'] === 'being transported') {
                 getConnection().getTransaction(response['asset']['id']).then(response => {
                   this.myTransport.push(response['asset'])
@@ -316,36 +333,6 @@
             })
           }
         })
-      },
-      createMultiSig (myKey, dropoffKey) {
-        let pubKeys = [
-          myKey,
-          dropoffKey
-        ].map(function (hex) { return Buffer.from(hex, 'hex') })
-
-        let witnessScript = bitcoinLib.script.multisig.output.encode(2, pubKeys)
-        let redeemScript = bitcoinLib.script.witnessScriptHash.output.encode(bitcoinLib.crypto.sha256(witnessScript))
-        let scriptPubKey = bitcoinLib.script.scriptHash.output.encode(bitcoinLib.crypto.hash160(redeemScript))
-        return bitcoinLib.address.fromOutputScript(scriptPubKey)
-      },
-      buildTransportcostTransaction (multiSigAddress) {
-        const equivalentSatoshis = this.utxo['satoshis'] - 2000
-        const previousTransactionHash = this.utxo['txid']
-        const payeeAddress = multiSigAddress
-        const outputIndex = this.utxo['vout']
-
-        let txb = new bitcoinLib.TransactionBuilder()
-        // Add the input (who is paying):
-        // [previous transaction hash, index of the output to use]
-        txb.addInput(previousTransactionHash, outputIndex)
-        // Add the output (who to pay to):
-        // [payee's address, amount in satoshis]
-        txb.addOutput(payeeAddress, equivalentSatoshis)
-        // Initialize a private key using WIF
-        let keyPair = bitcoinLib.ECPair.fromWIF(store.state.wallet.bitcoin.privatekey)
-
-        txb.sign(0, keyPair)
-        return txb.build().toHex()
       }
     }
   }

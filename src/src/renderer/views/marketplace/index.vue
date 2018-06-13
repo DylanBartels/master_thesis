@@ -97,11 +97,17 @@
         this.currentRow = val
       },
       onAccept () {
-        this.$message('Contract accepted! Go pick up the package and bring the following transaction script:' +
-          buildTransaction(store.state.wallet.bitcoin.privatekey, createMultiSig(
-            store.state.wallet.bitcoin.publickey,
-            this.currentRow['data']['dropoff']['public_key']
-          ), store.state.wallet.utxo))
+        this.$alert('Contract accepted! Go pick up the package and bring the following transaction script: ' +
+          buildTransaction(
+            store.state.wallet.bitcoin.privatekey,
+            createMultiSig(
+              store.state.wallet.bitcoin.publickey,
+              this.currentRow['data']['dropoff']['public_key']
+            )['P2SHaddress'],
+            store.state.wallet.utxo
+          ),
+        'Go to pickup', {}
+        )
       },
       filterTimeCreated (e) {
         return e.slice(0, -14)
