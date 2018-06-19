@@ -3,7 +3,7 @@
 University of Amsterdam - Software Engineering Master thesis
 Repository contains all presentations, documentation and testsetup program.
 
-The testsetup program can be found [here](/src), follow the [readme.md](/src/README.md) to recreate testsetup.
+The testsetup program can be found [here](/src), follow the [readme.md](/src/README.md) to recreate testsetup.<br>
 The thesis pdf can be found [here](/thesis/main.pdf).
 
 ### Prerequisites
