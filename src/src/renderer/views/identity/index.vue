@@ -65,6 +65,7 @@
   import { mapActions, mapGetters } from 'vuex'
   import store from '../../store'
   import { postTransactionScript, buildTransaction } from '../../util/bitcoin'
+  import { generateRoles } from '../../datastore'
 
   export default {
     data () {
@@ -82,8 +83,7 @@
     methods: {
       ...mapActions(['ChangeActor']),
       genKeypairs () {
-        // TODO: create function
-        return null
+        generateRoles()
       },
       sendTransaction () {
         postTransactionScript(buildTransaction(

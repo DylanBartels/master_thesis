@@ -1,7 +1,10 @@
 # Trustless Logistics Contracts
 
 University of Amsterdam - Software Engineering Master thesis
-Repository contains all presentations and documentation.
+Repository contains all presentations, documentation and testsetup program.
+
+The testsetup can be found under /src follow the readme.md to recreate testsetup.
+The thesis can be found under /thesis/main.pdf
 
 ### Prerequisites
 

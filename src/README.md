@@ -1,6 +1,24 @@
 # openlogistics
 
-> decentralized p2p logistics
+Decentralized p2p logistics
+
+#### Setup Credentials
+
+Credentials for bigchainDB are neccecarry, these can be obtained [here](https://testnet.bigchaindb.com/signup).
+
+``` bash
+touch .env
+nano .env
+```
+
+Fill in the APP_ID and APP_KEY with the created bigchaindb credentials.
+
+``` bash
+APP_URL=https://test.bigchaindb.com/api/v1/
+APP_ID=
+APP_KEY=
+BCDB_META_TAG=OpenLogisticsBeta
+```
 
 #### Build Setup
 
@@ -25,4 +43,6 @@ npm run lint
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[7c4e3e9](https://github.com/SimulatedGREG/electron-vue/tree/7c4e3e90a772bd4c27d2dd4790f61f09bae0fcef) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+#### Walkthrough
+
+// todo
