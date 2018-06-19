@@ -54,18 +54,47 @@ export function buildMultiSigTransaction (privateKey, firstPublicKey, secondPubl
     txb.sign(0, keyPair, redeemScript, null, utxoEquivalent['satoshis'], witnessScript)
     txb.sign(1, keyPair, redeemScript, null, utxoTransport['satoshis'], witnessScript)
 
-    let tx = txb.build()
     // return transactionscript multisig to transport actor (signed by dropoff actor)
-    return tx.toHex()
+    return txb.buildIncomplete().toHex()
   }, (error) => {
     console.log(error)
   })
 }
 
 export function signSecondMultiSigTransaction (privateKey, firstPublicKey, secondPublicKey, transactionScript) {
-  let tx = bitcoin.Transaction.fromHex(transactionScript)
-  let txid = tx.getId()
-  return txid
+  let pubKeys = [
+    firstPublicKey,
+    secondPublicKey
+  ].map(function (hex) { return Buffer.from(hex, 'hex') })
+
+  let witnessScript = bitcoin.script.multisig.output.encode(2, pubKeys)
+  let witnessScriptHash = bitcoin.crypto.sha256(witnessScript)
+
+  let redeemScript = bitcoin.script.witnessScriptHash.output.encode(witnessScriptHash)
+  let redeemScriptHash = bitcoin.crypto.hash160(redeemScript)
+
+  let scriptPubKey = bitcoin.script.scriptHash.output.encode(redeemScriptHash)
+  let P2SHaddress = bitcoin.address.fromOutputScript(scriptPubKey)
+
+  return getAddressUTXO(P2SHaddress).then((response) => {
+    const utxoEquivalent = response.data[0]
+    const utxoTransport = response.data[1]
+
+    let txb = bitcoin.TransactionBuilder.fromTransaction(bitcoin.Transaction.fromHex(transactionScript))
+
+    // Initialize a private key using WIF
+    const keyPair = bitcoin.ECPair.fromWIF(privateKey)
+
+    // Dropoff signing both utxo's on the multisig address
+    txb.sign(0, keyPair, redeemScript, null, utxoEquivalent['satoshis'], witnessScript)
+    txb.sign(1, keyPair, redeemScript, null, utxoTransport['satoshis'], witnessScript)
+
+    let txhex = txb.build().toHex()
+
+    return txhex
+  }, (error) => {
+    console.log(error)
+  })
 }
 
 export function createMultiSig (firstKey, secondKey) {

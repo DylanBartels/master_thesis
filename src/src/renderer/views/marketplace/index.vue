@@ -17,7 +17,6 @@
                 <p>Address: {{ scope.row.data.pickup.address }}</p>
                 <p>Postal: {{ scope.row.data.pickup.postal }}</p>
                 <p>Day: {{ filterTimeCreated(scope.row.data.pickup.date_day) }}</p>
-                <p>Public Key: {{ scope.row.data.pickup.public_key }}</p>
               </div>
             </el-col>
             <el-col :span="12">
@@ -28,7 +27,6 @@
                 <p>Address: {{ scope.row.data.dropoff.address }}</p>
                 <p>Postal: {{ scope.row.data.dropoff.postal }}</p>
                 <p>Day: {{ filterTimeCreated(scope.row.data.dropoff.date_day) }}</p>
-                <p>Public Key: {{ scope.row.data.dropoff.public_key }}</p>
               </div>
             </el-col>
           </el-row>
@@ -36,18 +34,18 @@
       </el-table-column>
       <el-table-column label="Value Category">
         <template slot-scope="scope">
-          €{{scope.row.data.value_category}}
+          €{{ scope.row.data.value_category }}
         </template>
       </el-table-column>
       <el-table-column label="Pickup City" width="150" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.data.pickup.city}}</span>
+          <span>{{ scope.row.data.pickup.city }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Created At" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span>{{filterTimeCreated(scope.row.data.date)}}</span>
+          <span>{{ filterTimeCreated(scope.row.data.date) }}</span>
         </template>
       </el-table-column>
     </el-table>

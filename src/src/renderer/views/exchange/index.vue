@@ -18,7 +18,6 @@
                   <p>Address: {{ scope.row.data.pickup.address }}</p>
                   <p>Postal: {{ scope.row.data.pickup.postal }}</p>
                   <p>Day: {{ scope.row.data.pickup.date_day.slice(0, -14) }}</p>
-                  <p>Public Key: {{ scope.row.data.pickup.public_key }}</p>
                 </div>
               </el-col>
               <el-col :span="12">
@@ -29,7 +28,6 @@
                   <p>Address: {{ scope.row.data.dropoff.address }}</p>
                   <p>Postal: {{ scope.row.data.dropoff.postal }}</p>
                   <p>Day: {{ scope.row.data.dropoff.date_day.slice(0, -14) }}</p>
-                  <p>Public Key: {{ scope.row.data.dropoff.public_key }}</p>
                 </div>
               </el-col>
             </el-row>
@@ -308,26 +306,29 @@
           transferAsset(response[response.length - 1], this.transport.bigchainPublicKey, this.bigchainDB.privatekey,
             'Completed')
         })
-        this.$confirm('Contract redeemed and payment send! You can follow the transaction: ' +
-          // 2. sign multisig transaction and broadcast (2/2)
-          signSecondMultiSigTransaction(
-            store.state.wallet.bitcoin.privatekey,
-            store.state.wallet.bitcoin.publickey,
-            this.currentRow.data.dropoff.public_key,
-            this.transport.transactionScript
-          ), 'Warning', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: 'Redeem completed'
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Redeem canceled'
+
+        // 2. sign multisig transaction and broadcast (2/2)
+        signSecondMultiSigTransaction(
+          store.state.wallet.bitcoin.privatekey,
+          store.state.wallet.bitcoin.publickey,
+          this.currentRow.data.dropoff.public_key,
+          this.transport.transactionScript
+        ).then(response => {
+          this.$confirm('Contract redeemed and payment send! You can follow the transaction: ' +
+            response, 'Warning', {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Redeem completed'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'Redeem canceled'
+            })
           })
         })
       },

@@ -37,7 +37,7 @@
       </el-col>
     </el-row>
 
-    <h1>Change Actor</h1>
+    <h2>Change Actor</h2>
     <el-row>
       <ul v-for="role in roles" style="padding-left: 0 !important;
     padding-right: 30px;">
@@ -47,9 +47,15 @@
       </ul>
     </el-row>
 
-    <h1>Generate new local keypairs</h1>
+    <h2>Generate new local keypairs</h2>
     <div style="margin-top: 20px">
       <el-button @click="genKeypairs">Generate</el-button>
+    </div>
+
+    <h2>Send BTC to address</h2>
+    <div style="margin-top: 20px">
+      <el-input v-model="returnAddress"></el-input>
+      <el-button @click="sendTransaction">Broadcast</el-button>
     </div>
 
   </div>
@@ -57,6 +63,8 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
+  import store from '../../store'
+  import { postTransactionScript, buildTransaction } from '../../util/bitcoin'
 
   export default {
     data () {
@@ -66,15 +74,23 @@
         myContracts: [],
         myContracts2: [],
         transporter: null,
-        currentRow: null
+        currentRow: null,
+        returnAddress: null
       }
     },
-    computed: {...mapGetters(['roles', 'bigchainDB', 'bitcoin', 'balance'])},
+    computed: {...mapGetters(['roles', 'bigchainDB', 'bitcoin', 'balance', 'utxo'])},
     methods: {
       ...mapActions(['ChangeActor']),
       genKeypairs () {
         // TODO: create function
         return null
+      },
+      sendTransaction () {
+        postTransactionScript(buildTransaction(
+          store.state.wallet.bitcoin.privatekey,
+          this.returnAddress,
+          store.state.wallet.utxo
+        ))
       }
     }
   }

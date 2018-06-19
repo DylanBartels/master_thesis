@@ -37,9 +37,11 @@ export function getPickupAssets (BCDBPublicKey, phase, assets) {
         if (response['metadata'].hasOwnProperty('phase')) {
           if (response['metadata']['phase'] === phase) {
             getConnection().getTransaction(response['id']).then(response => {
-              const asset = response['asset']
-              asset['id'] = response['id']
-              assets.push(asset)
+              if (response['asset']['data']['type'] === process.env.BCDB_META_TAG) {
+                const asset = response['asset']
+                asset['id'] = response['id']
+                assets.push(asset)
+              }
             })
           }
         }
@@ -51,7 +53,8 @@ export function getPickupAssets (BCDBPublicKey, phase, assets) {
 export function getDropoffAssets (BTCPublicKey, assets) {
   getConnection().searchAssets(BTCPublicKey).then(response => {
     for (let i = 0; i < response.length; i++) {
-      if (response[i]['data']['dropoff']['public_key'] === BTCPublicKey) {
+      if (response[i]['data']['dropoff']['public_key'] === BTCPublicKey &&
+        response[i]['data']['type'] === process.env.BCDB_META_TAG) {
         assets.push(response[i])
       }
     }
