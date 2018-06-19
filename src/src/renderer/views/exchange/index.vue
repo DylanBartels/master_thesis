@@ -89,7 +89,6 @@
                   <p>Address: {{ scope.row.data.pickup.address }}</p>
                   <p>Postal: {{ scope.row.data.pickup.postal }}</p>
                   <p>Day: {{ scope.row.data.pickup.date_day.slice(0, -14) }}</p>
-                  <p>Public Key: {{ scope.row.data.pickup.public_key }}</p>
                 </div>
               </el-col>
               <el-col :span="12">
@@ -100,16 +99,12 @@
                   <p>Address: {{ scope.row.data.dropoff.address }}</p>
                   <p>Postal: {{ scope.row.data.dropoff.postal }}</p>
                   <p>Day: {{ scope.row.data.dropoff.date_day.slice(0, -14) }}</p>
-                  <p>Public Key: {{ scope.row.data.dropoff.public_key }}</p>
                 </div>
               </el-col>
             </el-row>
             <el-row>
               <div style="margin-top: 20px">
-                <el-form ref="dropoff" :model="dropoff" label-width="120px">
-                  <el-form-item label="BigChainDB public key">
-                    <el-input v-model="dropoff.bigchainPublicKey"></el-input>
-                  </el-form-item>
+                <el-form ref="dropoff" :model="dropoff" label-width="150px">
                   <el-form-item label="Bitcoin public key">
                     <el-input v-model="dropoff.bitcoinPublicKey"></el-input>
                   </el-form-item>
@@ -156,7 +151,6 @@
                   <p>Address: {{ scope.row.data.pickup.address }}</p>
                   <p>Postal: {{ scope.row.data.pickup.postal }}</p>
                   <p>Day: {{ scope.row.data.pickup.date_day.slice(0, -14) }}</p>
-                  <p>Public Key: {{ scope.row.data.pickup.public_key }}</p>
                 </div>
               </el-col>
               <el-col :span="12">
@@ -167,9 +161,21 @@
                   <p>Address: {{ scope.row.data.dropoff.address }}</p>
                   <p>Postal: {{ scope.row.data.dropoff.postal }}</p>
                   <p>Day: {{ scope.row.data.dropoff.date_day.slice(0, -14) }}</p>
-                  <p>Public Key: {{ scope.row.data.dropoff.public_key }}</p>
                 </div>
               </el-col>
+            </el-row>
+            <el-row>
+              <div style="margin-top: 20px">
+                <el-form ref="transport" :model="transport" label-width="150px">
+                  <el-form-item label="Dropoff bigchaindb public key">
+                    <el-input v-model="transport.bigchainPublicKey"></el-input>
+                  </el-form-item>
+                  <el-form-item label="Transaction Script">
+                    <el-input v-model="transport.transactionScript"></el-input>
+                  </el-form-item>
+                </el-form>
+                <el-button type="primary" @click="onRedeem">Get reward</el-button>
+              </div>
             </el-row>
           </template>
         </el-table-column>
@@ -198,7 +204,8 @@
 <script>
   import { mapGetters } from 'vuex'
   import { getConnection } from '../../datastore'
-  import { postTransactionScript, createMultiSig, buildTransaction, buildMultiSigTransaction } from '../../util/bitcoin'
+  import { buildMultiSigTransaction, signSecondMultiSigTransaction, buildTransaction, createMultiSig, postTransactionScript } from '../../util/bitcoin'
+  import { transferAsset, getPickupAssets, getDropoffAssets, getTransportAssets } from '../../util/bigchaindb'
   import store from '../../store'
 
   export default {
@@ -217,13 +224,16 @@
           transactionScript: null
         },
         dropoff: {
-          bigchainPublicKey: null,
           bitcoinPublicKey: null
+        },
+        transport: {
+          bigchainPublicKey: null,
+          transactionScript: null
         }
       }
     },
     computed: {
-      ...mapGetters(['role', 'bigchainDB', 'bitcoin', 'utxo'])
+      ...mapGetters(['bigchainDB', 'bitcoin', 'utxo'])
     },
     created () {
       this.getTransport()
@@ -232,71 +242,92 @@
     },
     methods: {
       onExchangePickup () {
-        getConnection().listTransactions(this.currentRow.id).then(response => {
-          console.log(response)
-          // Transfers asset
-          // this.transferAsset(response[response.length - 1], this.pickup.bigchainPublicKey)
-          // Posts transport cost in multisig transaction
-          postTransactionScript(
-            buildTransaction(
-              store.state.wallet.bitcoin.privatekey,
-              createMultiSig(
-                this.pickup.bitcoinPublicKey,
-                this.currentRow.data.dropoff.public_key
-              ),
-              store.state.wallet.utxo
-            )
-          )
-          // Posts equivalent cost in multisig transaction
-          // this.postTransactionScript(this.pickup.transactionScript)
-        }).then(response => {
-          console.log(response)
+        this.$confirm('This will broadcast the equivalent cost transaction, ' +
+          'transport cost transaction and change ownership of the digital asset. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          // 1. Transfers asset to transfer public key
+          getConnection().listTransactions(this.currentRow.id).then(response => {
+            transferAsset(response[response.length - 1], this.pickup.bigchainPublicKey, this.bigchainDB.privatekey,
+              'Being transported')
+          })
+          // 2. Broadcast transport cost
+          postTransactionScript(buildTransaction(
+            store.state.wallet.bitcoin.privatekey,
+            createMultiSig(
+              this.pickup.bitcoinPublicKey,
+              this.currentRow.data.dropoff.public_key
+            )['P2SHaddress'],
+            store.state.wallet.utxo
+          ))
+          // 3. Broadcast equivalent cost in multisig transaction
+          postTransactionScript(this.pickup.transactionScript)
+          this.$message({
+            type: 'success',
+            message: 'Exchange completed'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Exchange canceled'
+          })
         })
       },
       onExchangeDropoff () {
-        this.$alert('Contract completed! You can redeem your reward by signing the following transaction script: ' +
-          buildMultiSigTransaction(
-            store.state.wallet.bitcoin.privatekey,
-            this.dropoff.bitcoinPublicKey,
-            store.state.wallet.bitcoin.publickey
-          ),
-        'Exchange asset', {}
-        )
-        // 1.sign multisig transaction
-        return null
+        // 1. sign multisig transaction (1/2)
+        buildMultiSigTransaction(
+          store.state.wallet.bitcoin.privatekey,
+          this.dropoff.bitcoinPublicKey,
+          store.state.wallet.bitcoin.publickey
+        ).then(response => {
+          this.$confirm('Exchange asset with transporter and give him the transactionscript:\n' +
+            response +
+            '\nGive him your BCDB public key:\n' +
+            store.state.wallet.bigchainDB.publickey, 'Warning', {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Exchange completed'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'Exchange canceled'
+            })
+          })
+        })
       },
       onRedeem () {
-        // 1. sign multisig transaction and broadcast
-        // 2. signasset to dropoff public key
-        return null
-      },
-      transferAsset (selectedAsset, receiverPublicKey) {
-        const driver = require('bigchaindb-driver')
-
-        return new Promise((resolve, reject) => {
-          // Construct metadata.
-          const metaData = {
-            'action': 'being transported',
-            'date': new Date().toISOString()
-          }
-          // Construct the new transaction
-          const transferTransaction = driver.Transaction.makeTransferTransaction(
-            // The previous transaction to be chained upon.
-            [{ tx: selectedAsset, output_index: 0 }],
-            // The (poutput) condition to be fullfilled in the next transaction.
-            [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(receiverPublicKey))],
-            // Metadata
-            metaData
-          )
-          // Sign the new transaction.
-          const signedTransaction = driver.Transaction.signTransaction(
-            transferTransaction, store.state.wallet.bigchainDB.privatekey)
-
-          // Post the transaction.
-          getConnection().postTransactionCommit(signedTransaction).then(successfullyPostedTransaction => {
-            resolve(successfullyPostedTransaction)
-          }).catch(error => {
-            reject(error)
+        // 1. Transfers asset to dropoff public key
+        getConnection().listTransactions(this.currentRow.id).then(response => {
+          transferAsset(response[response.length - 1], this.transport.bigchainPublicKey, this.bigchainDB.privatekey,
+            'Completed')
+        })
+        this.$confirm('Contract redeemed and payment send! You can follow the transaction: ' +
+          // 2. sign multisig transaction and broadcast (2/2)
+          signSecondMultiSigTransaction(
+            store.state.wallet.bitcoin.privatekey,
+            store.state.wallet.bitcoin.publickey,
+            this.currentRow.data.dropoff.public_key,
+            this.transport.transactionScript
+          ), 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Redeem completed'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Redeem canceled'
           })
         })
       },
@@ -304,35 +335,13 @@
         this.currentRow = val
       },
       getPickup () {
-        getConnection().searchAssets(store.state.wallet.bitcoin.publickey).then(response => {
-          for (let i = 0; i < response.length; i++) {
-            if (response[i]['data']['pickup']['public_key'] === store.state.wallet.bitcoin.publickey) {
-              this.myPickup.push(response[i])
-            }
-          }
-        })
+        getPickupAssets(store.state.wallet.bigchainDB.publickey, 'Introduced', this.myPickup)
       },
       getDropoff () {
-        getConnection().searchAssets(store.state.wallet.bitcoin.publickey).then(response => {
-          for (let i = 0; i < response.length; i++) {
-            if (response[i]['data']['dropoff']['public_key'] === store.state.wallet.bitcoin.publickey) {
-              this.myDropoff.push(response[i])
-            }
-          }
-        })
+        getDropoffAssets(store.state.wallet.bitcoin.publickey, this.myDropoff)
       },
       getTransport () {
-        getConnection().listOutputs(store.state.wallet.bigchainDB.publickey).then(response => {
-          for (let i = 0; i < response.length; i++) {
-            getConnection().getTransaction(response[i].transaction_id).then(response => {
-              if (response['metadata']['action'] === 'being transported') {
-                getConnection().getTransaction(response['asset']['id']).then(response => {
-                  this.myTransport.push(response['asset'])
-                })
-              }
-            })
-          }
-        })
+        getTransportAssets(store.state.wallet.bigchainDB.publickey, 'Being transported', this.myTransport)
       }
     }
   }

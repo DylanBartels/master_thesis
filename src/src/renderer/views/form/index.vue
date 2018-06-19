@@ -139,7 +139,7 @@
           }
 
           const metaData = {
-            'phase': 'introduced',
+            'phase': 'Introduced',
             'date': new Date().toISOString()
           }
 

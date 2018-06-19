@@ -58,7 +58,6 @@
 </template>
 
 <script>
-  // import { mapGetters } from 'vuex'
   import { getConnection } from '../../datastore'
   import { createMultiSig, buildTransaction } from '../../util/bitcoin'
   import store from '../../store'

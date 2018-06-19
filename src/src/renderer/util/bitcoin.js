@@ -31,12 +31,12 @@ export function buildMultiSigTransaction (privateKey, firstPublicKey, secondPubl
   let scriptPubKey = bitcoin.script.scriptHash.output.encode(redeemScriptHash)
   let P2SHaddress = bitcoin.address.fromOutputScript(scriptPubKey)
 
-  getAddressUTXO(P2SHaddress).then((response) => {
+  return getAddressUTXO(P2SHaddress).then((response) => {
     // Assumes that there are only two transactions onto the multisig address (equivalent + transportcost)
     const utxoEquivalent = response.data[0]
     const utxoTransport = response.data[1]
-    console.log(utxoEquivalent)
-    console.log(utxoTransport)
+    // console.log(utxoEquivalent)
+    // console.log(utxoTransport)
 
     // Build transaction from p2sh
     let txb = new bitcoin.TransactionBuilder()
@@ -44,6 +44,7 @@ export function buildMultiSigTransaction (privateKey, firstPublicKey, secondPubl
     txb.addInput(utxoEquivalent['txid'], 0, null, scriptPubKey)
     txb.addInput(utxoTransport['txid'], 0, null, scriptPubKey)
 
+    // todo: change output address to correspond to utxoEquivalent
     txb.addOutput('1EY38FGwuSg3uRzetBwYqYh9jjbX55fHsL', ((utxoEquivalent['satoshis'] + utxoTransport['satoshis']) - 2000))
 
     // Initialize a private key using WIF
@@ -54,17 +55,18 @@ export function buildMultiSigTransaction (privateKey, firstPublicKey, secondPubl
     txb.sign(1, keyPair, redeemScript, null, utxoTransport['satoshis'], witnessScript)
 
     let tx = txb.build()
-
-    // // return transactionscript multisig to transport actor
+    // return transactionscript multisig to transport actor (signed by dropoff actor)
     return tx.toHex()
   }, (error) => {
     console.log(error)
   })
 }
 
-// export function signSecondMultiSigTransaction (privateKey, firstPublicKey, secondPublicKey) {
-//   return null
-// }
+export function signSecondMultiSigTransaction (privateKey, firstPublicKey, secondPublicKey, transactionScript) {
+  let tx = bitcoin.Transaction.fromHex(transactionScript)
+  let txid = tx.getId()
+  return txid
+}
 
 export function createMultiSig (firstKey, secondKey) {
   // 2/2 multisigniture address (via P2SH)
