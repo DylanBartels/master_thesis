@@ -10,7 +10,9 @@ cd ..
 
 echo "Compiling master thesis"
 cd thesis
-rm main.pdf
+./makeidx.sh
 pdflatex main.tex
-rm main.aux main.log main.out main.nlo main.toc
+bibtex main.aux
+pdflatex main.tex
+# rm main.aux main.log main.out main.nlo main.toc
 cd ..

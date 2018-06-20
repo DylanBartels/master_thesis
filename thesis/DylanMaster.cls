@@ -3,7 +3,7 @@
 %------ Identification -------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{SelimArticle}[17/02/14 Selim's template for school]
+\ProvidesClass{DylanMaster}[20/06/18 Dylan master thesis]
 \LoadClass[fleqn, 12pt]{article}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,6 +54,7 @@
 \RequirePackage[space]{grffile}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{subcaption}
+% \RequirePackage{bigstrut}
 \RequirePackage{multicol}
 \RequirePackage{multirow}
 \RequirePackage{pdfpages}

@@ -4,14 +4,18 @@
 
 \def\school#1{\gdef\@school{#1}}
 \def\@school{\@latex@warning@no@line{No \noexpand\school given}}
-\def\course#1{\gdef\@course{#1}}
-\def\@course{\@latex@warning@no@line{No \noexpand\course given}}
-\def\coursenum#1{\gdef\@coursenum{#1}}
-\def\@coursenum{\@latex@warning@no@line{No \noexpand\coursenum given}}
+\def\project#1{\gdef\@project{#1}}
+\def\@project{\@latex@warning@no@line{No \noexpand\project given}}
+\def\degree#1{\gdef\@degree{#1}}
+\def\@degree{\@latex@warning@no@line{No \noexpand\degree given}}
 \def\student#1{\gdef\@student{#1}}
 \def\@student{\@latex@warning@no@line{No \noexpand\student given}}
 \def\studentnum#1{\gdef\@studentnum{#1}}
 \def\@studentnum{\@latex@warning@no@line{No \noexpand\studentnum given}}
+\def\supervisor#1{\gdef\@supervisor{#1}}
+\def\@supervisor{\@latex@warning@no@line{No \noexpand\supervisor given}}
+\def\organization#1{\gdef\@organization{#1}}
+\def\@organization{\@latex@warning@no@line{No \noexpand\organization given}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %----------- TITLEPAGE -----------%
@@ -39,8 +43,8 @@
 %%%%%%%%%%%%%%
 
 \textsc{\LARGE \@school}\\[2cm] % Name of your university/college
-\textsc{\Large \@course}\\[0.5cm] % Major heading such as course name
-\textsc{\large \@coursenum}\\[0.5cm] % Minor heading such as course title
+\textsc{\Large \@project}\\[0.5cm] % Major heading such as course name
+\textsc{\large \@degree}\\[0.5cm] % Minor heading such as course title
 
 %%%%%%%%%%%%%%
 %-- TITLE ---%
@@ -56,15 +60,19 @@
 \setstretch{1.1}
 \begin{minipage}{0.4\textwidth}
 \begin{flushleft} \large
-{\Large Student Name:}\\
-\@student % Your name\\
+{\Large Student Name:} \\
+{\Large Student Number:} \\
+{\Large Supervisor:} \\
+{\Large Host Organization:}
 \end{flushleft}
 \end{minipage}
 ~
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
-{\Large Student ID:} \\
-\@studentnum
+\@student \\
+\@studentnum \\
+\@supervisor \\
+\@organization
 \end{flushright}
 \end{minipage}\\[3cm]
 

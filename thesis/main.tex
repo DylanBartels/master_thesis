@@ -1,4 +1,4 @@
-\documentclass[Nomencl]{SelimArticle}
+\documentclass[Nomencl]{DylanMaster}
 \input{./options}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \begin{document}
@@ -10,10 +10,18 @@
 
 \section{Introduction}
 
-The gig economy is in full effect, individuals get payed for the execution of short term contracts and big companys intermediate in the supply and demand of this labour. With the intermediation of these parties the companies profit of margins and deny individuals full ownership of the value of the produced labour. Recent advancements in peer-to-peer technologies and decentralized posibilities interrest the academic domain if there are possiblities to shift towards decentralized solutions in the logistics domain\cite{research_demand}\cite{research_demand}\cite{research_demand}.\par
+The gig economy is in full effect, individual actors get payed for the execution of short term contracts and centralized companies intermediate in the supply and demand of this labour. With the intermediation of these parties the companies profit of margins and deny individuals full ownership of the value of the produced labour. Recent advancements in peer-to-peer technologies and decentralized posibilities interrest the academic domain if there are alternative options to shift towards decentralized solutions in the logistics domain\cite{research_demand}\cite{research_demand}\cite{research_demand}.\par
+
+\subsection{Initial Study}
+
 % The relevancy of your research,
 Recent successful technical innovations have been due to a shift from centralization to peer-to-peer services, examples of these are Uber, Airbnb and Kickstarter. In the domain of supply chain logistics this innovation has been lacking. Recent research \cite{peer-to-peerDecentralizedLogistics} have proposed a peer-to-peer framework supporting interoperability between different actors in the logistics chains. This research lacks insight related to trust, network and technical implementation but establishes interest in the domain regarding implementation. \par
 With the recent progression in the domain of trustless value transference, research towards the applicability of this in the supply chain offers relevancy. In \cite{trustlessIntermediationInBCServiceMarket} research has formulated possible implementation of trustless intermediation in blockchain based decentralized service marketplaces. The research topic arises if this or other intermediation solutions can also be applied to peer-to-peer logistics marketplaces and to which degree will there be a custodian in the process due to it including a physical process.
+
+\subsection{Problem Statement}
+
+\subsubsection{Research Questions}
+
 % The specific research questions to be answered in the project.
 \bigbreak
 \noindent Main research question:
@@ -30,18 +38,60 @@ With the recent progression in the domain of trustless value transference, resea
   \item What level of anonymity is possible on this marketplace?
 \end{itemize}
 
+\subsubsection{Solution Outline}
+
+None specific cryptocurrency
+
+\subsubsection{Why Blockchain?}
+
+Paper why blockchain
+cencorship resistance
+immutability
+ownership
+transparency
+downside
+upside
+
+\subsubsection{Research Method}
+
+\subsection{Related Work}
+
 \section{Background}
 
-\subsection{Decentralized}
+\subsection{Blockchain}
 
-\subsection{Trustless}
+Different definitions depending on the interpreter. Can be a ethics framework, speculative asset or a distributinon of rights to spend an unspend transaction (UTXO). There are no wrong answers.
+Blockchain is the right to sign a UTXO (unspent transaction) with your keypair.
+
+\subsubsection{Decentralized}
+
+Centralization is very efficient compared to decentralization. The forming of consensus requers high amount of value by putting energy in computation with the proof of work algorithm, going back to the byzantine fault tolerance trusting other parties to comform to the input of information will be more costly. The function decentralization fulfills is raising the cost of attacking the consensus which is being formed every input stream of information captured in blocks. The sensorship resistance of decentralization is the function it excels at.
+Following this premises in the domain of logistics centralizated entities fulfill trustworthy responsibllities which cannot compete with decentralized services. This is unless this service wants to benefit the cencorship resistance which could be made possible. Censoring is not often applied in logistics, some examples along many are:
+Transportation of written religious information in corresponding religion underpressed areas
+Transportation of illicit goods
+The other option which logistics could benefit in the model of trade-offs is:
+The costs of the controlling the goods to be transported and transporting being more constly than actually transporting the goods without intermediation of checking on the parameters of censorship.
+
+\subsubsection{Trustless}
 
 The definiton of trustless can be achieved if no entity is custodian of any process. In the domain of logistics a custodian will always be responsible for the actual transport of the physical good. This means that
 
+\subsubsection{Multisigniture}
+
+
+
+\subsection{Smart Contracts}
+
+Smart contracts are digital representations of a contracts which will be activated once certain input activates parameters. The contracts promise to:
+ enforce contracts automatically
+Take out the middle man in contract construction, execution and enforcement
+A normal contract
+smart contracts are very difficult to implement well. They all trust on some oracle input which has to be correct for contracts to behave.  but how can you garantee the input is correct? Conesnsus on the correctness of data which is stored depends on the correctness of input. If the oracles who register the data are in full control of input they are lone ruler of correctness disregarding the consensus.
+
 \subsection{Marketplace}
 
-\subsection{Multisigniture}
-
+In the domain of logistical contracts for being the custodian for transport settled identities work on reputation based systems to create trust for transport. If decentralized trustless aggregation of contracts could take place in a orderbook everybody should be able to fulfill the same side of this marketplace, supply and demand.
+The marketplace is a orderbook filled with digital representations of transport contracts. The contracts are demand of transport from place A to B, the supply is facilitators of this transport. Once the order is met and work has to be facilitated the supply picks up the asset and brings it to designated place of dropoff. The three actors: pickup, drop-off and transport are represented by a keypair which gives the right of ownership throughtout the process of the asset. This ownership is the right to the transport contract and asset being transported, the data it contains is the pickup and dropoff point.
 
 \section{Test Setup}
 
@@ -120,11 +170,20 @@ To analyze the results the whole testsetup will be devided into different phases
   \item Redeeming
 \end{enumerate}
 
-
+What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
 
 \section{Conclusion}
 
+Attack vectors:
+Eating the difference in equivalance cost if the reputation cost of the starting actor is benefitial to the actor eating the costs
+blockchain is the right to sign a UTXO, the right is valued due to being censorship resistant. The capacity to make it censorship resistant cost a lot of energy. From an economic perspective centralization is very efficient due to not needing to form consensus which cost a lot of energy. Traditional reputation systems in place form all the “aanspraakelijkheid” the smart logistics contract resembles. They do this quite well, if bad events occur  when tnt post is custodian of your asset than resolution is often very dynamic. This would be hard to capture in similair smart contract construction as OpenLogistics[1]. Conflict resolution is currently a loss for all parties when a package is lost, these kind of conflict could beter be immediated by current traditional logistics caretakers.
+ It’s only economically viable to spend such an amount of energy to defeat the possible censorship that it becomes viable.
+Zero confirmation:
+Zero confirmations are currently not safe to be used in production setups, the attacker could easily write a script broadcasting the same UTXO moments later. This double spend attack will remain harmfull in the current testsetup. Solutions are available, bitcoincash[cite safe accept 0-conf] accepting zero-conf safely, microsoft currently accepts this payment since declining to accept bitcoin for the mentioned reason. Since bitcoincash is a fork of bitcoin the testsetup could easily be alternated to work on this network. Another possiblity to counteract the double spend attack would be to use the bitcoin lightning network which is a second layer solution which enables instant transactions. Given that blockchain mainchain does not scale and remain decentralized this alternative would provide more promise.
+
 \section{Discussion}
+
+blockchain is nothing other than the right to sign a UTXO
 
 \section{Notes}
 
@@ -157,6 +216,6 @@ The stack gives all data open for public, but it is also fully transparant what 
 
 Downside of all actors having to have generated keypair before lising is possible on marketplace.
 
-\bibliographystyle{IEEEtran}
+\bibliographystyle{plain}
 \bibliography{dabib.bib}
 \end{document}
