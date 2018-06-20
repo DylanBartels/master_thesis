@@ -184,6 +184,21 @@ To analyze the results the whole testsetup will be devided into different phases
 
 What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
 
+\subsection{Transparancy}
+
+A example of a mainnet testrun can be seen locally, if copy of blockchain is present, or through commonly used block explorers \href{https://www.blocktrail.com/BTC}{[add as footnote]}
+ with the following addresses:
+\begin{enumerate}
+  \item Actor A: 17F4ZhEJp83qqEG1S6z8YcPbWW7AdqbkZ3
+  \item Actor B: 19exDB5Fb2gQAv7k2dH93WbLga1ZUNz9mh
+  \item Actor C: 1EY38FGwuSg3uRzetBwYqYh9jjbX55fHsL
+  \item Multisig (B+C): 3MiFyavsRpMZBzfxFk94WdeZUnbQP1hdDy
+\end{enumerate}
+
+Actor B actually has no UTXO on his address, this is due only using his keypair to sign the transactions. The function Actor B actually fulfills is being the oracle for conflict resolution upon dropoff exchange by signing or not.\par
+The asset transferring taking place can also be seen by exploring bigchaindb addresses. \par
+The aggregation of the movement of assets between addresses can be used for a reputation system.
+
 \section{Conclusion}
 
 Attack vectors:
