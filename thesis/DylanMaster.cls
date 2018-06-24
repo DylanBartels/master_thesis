@@ -34,7 +34,7 @@
 % setspace  : Manages spacing in the document.
 % float     : Put [H] after \begin{figure} to force position of figure.
 % sectsty   : Used to have hline under new section.
-% mypage    : title page customized by Selim. use \mytitlepage.
+% titlepage : title page customized by Dylan. use \mytitlepage.
 % grffile   : allows spaces in file names.
 % enumitem  : reduce space in lists. \begin{itemize}[nolistsep]
 % subcaption: Subfigures.
@@ -67,6 +67,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \geometry{letterpaper, height=245mm, width=170mm}
 \Crefname{equation}{Eq.}{Eqs.}
-\setstretch{1.5}
+\setstretch{1}
 \frenchspacing
 \setlength{\skip\footins}{1cm}

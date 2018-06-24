@@ -20,6 +20,9 @@ APP_KEY=
 BCDB_META_TAG=OpenLogisticsBeta
 ```
 
+On first run three keypairs will be generated in: ~/Library/Application Support/OpenLogistics
+Every keypair represents a actor in the test setup mechanism.
+
 #### Build Setup
 
 ``` bash

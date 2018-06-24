@@ -1,0 +1,19 @@
+Attack vectors:
+Eating the difference in equivalance cost if the reputation cost of the starting actor is benefitial to the actor eating the costs
+blockchain is the right to sign a UTXO, the right is valued due to being censorship resistant. The capacity to make it censorship resistant cost a lot of energy. From an economic perspective centralization is very efficient due to not needing to form consensus which cost a lot of energy. Traditional reputation systems in place form all the “aanspraakelijkheid” the smart logistics contract resembles. They do this quite well, if bad events occur  when tnt post is custodian of your asset than resolution is often very dynamic. This would be hard to capture in similair smart contract construction as OpenLogistics[1]. Conflict resolution is currently a loss for all parties when a package is lost, these kind of conflict could beter be immediated by current traditional logistics caretakers.
+ It’s only economically viable to spend such an amount of energy to defeat the possible censorship that it becomes viable.
+Zero confirmation:
+Zero confirmations are currently not safe to be used in production setups, the attacker could easily write a script broadcasting the same UTXO moments later. This double spend attack will remain harmfull in the current testsetup. Solutions are available, bitcoincash[cite safe accept 0-conf] accepting zero-conf safely, microsoft currently accepts this payment since declining to accept bitcoin for the mentioned reason. Since bitcoincash is a fork of bitcoin the testsetup could easily be alternated to work on this network. Another possiblity to counteract the double spend attack would be to use the bitcoin lightning network which is a second layer solution which enables instant transactions. Given that blockchain mainchain does not scale and remain decentralized this alternative would provide more promise.
+RBF (replace-by-fee):
+no rbf: 51 attack or Finney attack(https://bitcoin.stackexchange.com/questions/4942/what-is-a-finney-attack)
+A network like ethereum has a average block time of 15 seconds and with a is quite safe after 8 confirmations.
+
+The bitcoin protocol does not provide any guarantee at all about zero-conf transactions. It provides probabilistic guarantees for n-conf transactions, but only when n is 1 or more. Specifically, as Satoshi proved, the probability of an n-conf transaction being reversed and double-spent decays very quickly with n, so that for n = 6 it can be considered impossible.
+
+Attempts to get zero-conf payments to work, e.g. by inspecting the mempools of volunteer relay nodes, are attempts to solve the double-spending problem without the blockchain, the miners, and proof-of-work. People tried to do that for 25 years with no success.
+
+You can get a solution for the 0-conf double-spend problem that "works" only in the hacker's sense of the word, not in the engineer's sense. That level of security is OK for bittorrent or Tor -- but not for a payment system.
+
+The only change that would actually improve bitcoin's dismal usability (and make it competitive with other altcoins) is a reduction of the block interval from 10 minutes to under a minute. Then it would still be too slow to compete with credit and debit cards for walk-in stores and restaurants, but may be good enough for e-commerce.
+
+By the way, the payment channels that are supposed to be the building block of the Lightning Network use zero-conf transactions that are kept on file for months before being sent to the miners. Thus payment channels too are secure only in the hackers' sense of the term -- that is, not really secure.
