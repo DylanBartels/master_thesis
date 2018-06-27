@@ -61,6 +61,7 @@
 \RequirePackage{url}
 \RequirePackage{hyperref}
 \RequirePackage{cleveref}
+\RequirePackage{csquotes}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %---------- Options ----------%
@@ -70,3 +71,4 @@
 \setstretch{1}
 \frenchspacing
 \setlength{\skip\footins}{1cm}
+\renewcommand{\mkbegdispquote}[2]{\itshape}

@@ -34,7 +34,7 @@ However reputation loss might not be the only incentive available to achieve tra
 \subsubsection{Solution Outline}
 
 Our solution uses a digital representation of the transport contract which includes the begin address, end address and the end address public key. This contracts will be called the asset and ownership on this contract will be tied to the owner of the physical asset which is intended to be transported with the process. When the transport actor is custodian of transporting the asset an equivalent value or more will be put in escrow which can be unlocked by the endpoint actor. The setup incentivezes for the transport actor to move the asset to the endpoint else losing the escrow equivalent value. \par
-
+We chose to implement the escrow on the Bitcoin network due to it being well tested and offering a baseline environment in the decentralized domain.
 % None specific cryptocurrency for escrow
 % marketplace orderbook orders consist out of transport coordinates and asset being transported. Ownership of this translate to ownership in the physical domain.
 % todo: figure
