@@ -10,6 +10,8 @@ To analyze the results the whole testsetup will be devided into different phases
 
 What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
 
+The information regarding the physical asset is captured inside an ricardian contract \cite{}, an example of the data model can be found in appendix C. This ricardian contract is stored with bigchaindb and the user which creates and signs the contract owns the contract. This user is the only one who can transfer it to another bigchaindb keypair. This creates a mechanism where verification can always take place because there is full transparancy on assets handled. Ownership of the asset is proofable. A reputation system could find it's place if aggregation of transactions on a specific bigchaindb keypair represents transport contracts completed.
+
 \subsection{Transparancy}
 
 A example of a mainnet testrun can be seen locally, if copy of blockchain is present, or through commonly used block explorers \href{https://www.blocktrail.com/BTC}{[add as footnote]}
@@ -26,3 +28,10 @@ The asset transferring taking place can also be seen by exploring bigchaindb add
 The aggregation of the movement of assets between addresses can be used for a reputation system.
 
 % todo: add ricardian contract example of data model in appendix
+\subsection{metrics}
+
+Trustless (Conflict intermediation)
+Time (blocktime, zero confirmations, other networks)
+Privacy (what is known)
+Cost (3x transaction fee)
+Attack vectors (in conclusion)
