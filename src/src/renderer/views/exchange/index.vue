@@ -315,7 +315,7 @@
           this.transport.transactionScript
         ).then(response => {
           this.$confirm('Contract redeemed and payment send! You can follow the transaction: ' +
-            response, 'Warning', {
+            response + postTransactionScript(response), 'Warning', {
             confirmButtonText: 'OK',
             cancelButtonText: 'Cancel',
             type: 'warning'
