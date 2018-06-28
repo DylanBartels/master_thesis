@@ -5,7 +5,7 @@ To analyze the obtained result of OpenLogistics will be devided into three parts
   \item Endpoint actor
   \item Service provider
 \end{enumerate}
-The \textbf{service consumer} uses OpenLogistics because he wants to transport a physical good. He can create and sign a Ricardian contract which will than be stored on BigchainDB. This represents a request for transport, the ownership of the physical good and includes the information regarding the transport, a example of the data model can be found in appendix C. \par
+The \textbf{service consumer} uses OpenLogistics because he wants to transport a physical good. He can create and sign a Ricardian contract which will than be stored on BigchainDB. This represents a request for transport, the ownership of the physical good and includes the information regarding the transport, an example of the data model can be found in appendix C. \par
 The \textbf{service provider} can acces the OpenLogistics marketplace orderbook and accept the contract in his local client. Upon accepting
 
 What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
@@ -14,13 +14,13 @@ The information regarding the physical asset is captured inside an ricardian con
 
 \subsection{Transparancy}
 
-A example of a mainnet testrun can be seen locally, if copy of blockchain is present, or through commonly used block explorers \href{https://www.blocktrail.com/BTC}{[add as footnote]}
+An example of a mainnet testrun can be seen locally, if copy of blockchain is present, or through commonly used block explorers \href{https://www.blocktrail.com/BTC}{[add as footnote]}
  with the following addresses:
 \begin{enumerate}
   \item Service consumer: 17F4ZhEJp83qqEG1S6z8YcPbWW7AdqbkZ3
   \item Endpoint actor: 19exDB5Fb2gQAv7k2dH93WbLga1ZUNz9mh
   \item Service provider: 1EY38FGwuSg3uRzetBwYqYh9jjbX55fHsL
-  \item Multisig (B+C): 3MiFyavsRpMZBzfxFk94WdeZUnbQP1hdDy
+  \item Multisig (Endpoint actor + Service provider): 3MiFyavsRpMZBzfxFk94WdeZUnbQP1hdDy
 \end{enumerate}
 
 Actor B actually has no UTXO on his address, this is due only using his keypair to sign the transactions. The function Actor B actually fulfills is being the oracle for conflict resolution upon dropoff exchange by signing or not.\par
