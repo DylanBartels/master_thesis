@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="33d19b8f-e0c2-4ddc-8694-7eefc01d37bb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentations/defence_draft.key" beforeDir="false" afterPath="$PROJECT_DIR$/presentations/defence_draft.key" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/chapters/01_introduction.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/chapters/01_introduction.tex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,7 +18,7 @@
       <file leaf-file-name="wallet.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/store/modules/wallet.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
+            <state relative-caret-position="420">
               <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
@@ -28,7 +30,7 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="4395">
               <caret line="297" column="42" selection-start-line="297" selection-start-column="42" selection-end-line="297" selection-end-column="42" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#el-row#1;n#template#0;n#el-table-column#0;n#el-table#0;n#el-row#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -40,7 +42,7 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/views/identity/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
+            <state relative-caret-position="1140">
               <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -54,17 +56,26 @@
       <file leaf-file-name="bigchaindb.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bigchaindb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
+            <state relative-caret-position="675">
               <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/datastore/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="336">
+              <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_model.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data_model.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
@@ -141,6 +152,7 @@
         <option value="$PROJECT_DIR$/src/README.md" />
         <option value="$PROJECT_DIR$/src/.gitignore" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/data_model.json" />
       </list>
     </option>
   </component>
@@ -174,8 +186,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -184,21 +194,12 @@
               <item name="master_thesis" type="b2602c69:ProjectViewProjectNode" />
               <item name="master_thesis" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="master_thesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="master_thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="master_thesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="master_thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -290,14 +291,17 @@
       <workItem from="1528983522370" duration="4742000" />
       <workItem from="1529326467051" duration="31814000" />
       <workItem from="1529449452875" duration="4863000" />
+      <workItem from="1530190443993" duration="248000" />
+      <workItem from="1530193362695" duration="299000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136308000" />
+    <option name="totallyTimeSpent" value="136855000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -345,9 +349,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bigchaindb.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/views/form/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -538,10 +539,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="577">
           <caret line="181" column="12" lean-forward="true" selection-start-line="181" selection-start-column="12" selection-end-line="181" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#el-collapse#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#3752#3783#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -583,7 +580,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/store/modules/wallet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
+        <state relative-caret-position="420">
           <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
@@ -593,7 +590,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="4395">
           <caret line="297" column="42" selection-start-line="297" selection-start-column="42" selection-end-line="297" selection-end-column="42" />
           <folding>
             <element signature="n#style#0;n#div#0;n#el-row#1;n#template#0;n#el-table-column#0;n#el-table#0;n#el-row#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -603,7 +600,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/views/identity/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
+        <state relative-caret-position="1140">
           <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -615,7 +612,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bigchaindb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
+        <state relative-caret-position="675">
           <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
         </state>
       </provider>
@@ -632,8 +629,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/datastore/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="336">
+          <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_model.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>

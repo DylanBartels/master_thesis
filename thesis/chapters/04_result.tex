@@ -1,12 +1,12 @@
-In this chapter we describe OpenLogistics, the created decentralized  marketplace prototype for transport contracts. OpenLogistics uses the bitcoin mainet for the multisignature mechanism and bigchaindb to create orders and aggregate them in a orderbook. \par
-
-To analyze the results the whole testsetup will be devided into different phases, at every phase the possible actor actions will be evaluated. The phases to be analyzed are the following:
+In this chapter we describe OpenLogistics, the created decentralized  marketplace prototype for facilitating trustless transport contracts. OpenLogistics uses the bitcoin mainet for the multisignature trustless intermediation mechanism, the distributed data storage bigchaindb to store legally binding liability Ricardian contracts and the software client aggregates the contracts and facilitates the interaction. \par
+To analyze the obtained result of OpenLogistics will be devided into three parts representing the three roles which can interact with the mechanism. Every role owns a Bitcoin and BigchainDB keypair once interacting with the software client. The roles which interact with the mechanism are the following:
 \begin{enumerate}
-  \item Setup
-  \item Pickup
-  \item Dropoff
-  \item Redeeming
+  \item Service consumer
+  \item Endpoint actor
+  \item Service provider
 \end{enumerate}
+The \textbf{service consumer} uses OpenLogistics because he wants to transport a physical good. He can create and sign a Ricardian contract which will than be stored on BigchainDB. This represents a request for transport, the ownership of the physical good and includes the information regarding the transport, a example of the data model can be found in appendix C. \par
+The \textbf{service provider} can acces the OpenLogistics marketplace orderbook and accept the contract in his local client. Upon accepting
 
 What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
 
@@ -17,9 +17,9 @@ The information regarding the physical asset is captured inside an ricardian con
 A example of a mainnet testrun can be seen locally, if copy of blockchain is present, or through commonly used block explorers \href{https://www.blocktrail.com/BTC}{[add as footnote]}
  with the following addresses:
 \begin{enumerate}
-  \item Actor A: 17F4ZhEJp83qqEG1S6z8YcPbWW7AdqbkZ3
-  \item Actor B: 19exDB5Fb2gQAv7k2dH93WbLga1ZUNz9mh
-  \item Actor C: 1EY38FGwuSg3uRzetBwYqYh9jjbX55fHsL
+  \item Service consumer: 17F4ZhEJp83qqEG1S6z8YcPbWW7AdqbkZ3
+  \item Endpoint actor: 19exDB5Fb2gQAv7k2dH93WbLga1ZUNz9mh
+  \item Service provider: 1EY38FGwuSg3uRzetBwYqYh9jjbX55fHsL
   \item Multisig (B+C): 3MiFyavsRpMZBzfxFk94WdeZUnbQP1hdDy
 \end{enumerate}
 
