@@ -4,7 +4,16 @@
     <list default="true" id="33d19b8f-e0c2-4ddc-8694-7eefc01d37bb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentations/defence_draft.key" beforeDir="false" afterPath="$PROJECT_DIR$/presentations/defence_draft.key" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/renderer/util/bitcoin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/renderer/util/bitcoin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/renderer/views/form/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/renderer/views/form/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/chapters/01_introduction.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/chapters/01_introduction.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/chapters/03_test_setup.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/chapters/03_test_setup.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/chapters/04_result.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/chapters/04_result.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/chapters/05_conclusion.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/chapters/05_conclusion.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/main.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/main.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/main.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/main.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis/options.tex" beforeDir="false" afterPath="$PROJECT_DIR$/thesis/options.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis_plan/main.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/thesis_plan/main.pdf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,8 +27,8 @@
       <file leaf-file-name="wallet.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/store/modules/wallet.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+            <state relative-caret-position="-9">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -30,8 +39,8 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1124">
-              <caret line="355" selection-start-line="355" selection-end-line="355" />
+            <state relative-caret-position="446">
+              <caret line="314" column="42" selection-start-line="314" selection-start-column="42" selection-end-line="314" selection-end-column="42" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#el-row#1;n#template#0;n#el-table-column#0;n#el-table#0;n#el-row#1;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -39,20 +48,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bitcoin.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bitcoin.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bitcoin.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="97" column="1" selection-start-line="97" selection-start-column="1" selection-end-line="97" selection-end-column="1" />
+            <state relative-caret-position="720">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/views/identity/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
+            <state relative-caret-position="411">
+              <caret line="85" column="14" selection-start-line="85" selection-start-column="14" selection-end-line="85" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -65,7 +74,7 @@
       <file leaf-file-name="bigchaindb.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bigchaindb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
+            <state relative-caret-position="675">
               <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
             </state>
           </provider>
@@ -74,8 +83,42 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/renderer/datastore/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="300">
+              <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/src/renderer/views/form/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="185" column="8" selection-start-line="185" selection-start-column="8" selection-end-line="185" selection-end-column="8" />
+              <folding>
+                <element signature="n#style#0;n#el-collapse#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#3752#3783#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/src/renderer/views/marketplace/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="83" column="23" selection-start-line="83" selection-start-column="23" selection-end-line="83" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -142,8 +185,6 @@
         <option value="$PROJECT_DIR$/src/src/renderer/util/crypto.js" />
         <option value="$PROJECT_DIR$/src/src/renderer/store/modules/wallet.js" />
         <option value="$PROJECT_DIR$/src/src/renderer/store/getters.js" />
-        <option value="$PROJECT_DIR$/src/src/renderer/views/form/index.vue" />
-        <option value="$PROJECT_DIR$/src/src/renderer/util/bitcoin.js" />
         <option value="$PROJECT_DIR$/src/src/renderer/views/marketplace/index.vue" />
         <option value="$PROJECT_DIR$/src/src/renderer/util/bigchaindb.js" />
         <option value="$PROJECT_DIR$/src/src/renderer/views/identity/index.vue" />
@@ -153,6 +194,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/data_model.json" />
         <option value="$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue" />
+        <option value="$PROJECT_DIR$/src/src/renderer/util/bitcoin.js" />
+        <option value="$PROJECT_DIR$/src/src/renderer/views/form/index.vue" />
       </list>
     </option>
   </component>
@@ -177,9 +220,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="203" />
-    <option name="width" value="1440" />
-    <option name="height" value="877" />
+    <option name="x" value="2" />
+    <option name="y" value="23" />
+    <option name="width" value="1297" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -237,6 +281,15 @@
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="identity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="master_thesis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="master_thesis" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="marketplace" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -336,16 +389,15 @@
       <workItem from="1529326467051" duration="31814000" />
       <workItem from="1529449452875" duration="4863000" />
       <workItem from="1530190443993" duration="248000" />
-      <workItem from="1530193362695" duration="2808000" />
+      <workItem from="1530193362695" duration="6022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139364000" />
+    <option name="totallyTimeSpent" value="142578000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -393,13 +445,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/form/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/datastore/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="975">
@@ -572,13 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/marketplace/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="74" column="6" lean-forward="true" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dist/electron/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1305" />
@@ -601,16 +639,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/store/modules/wallet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -628,31 +656,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/.env">
+    <entry file="file://$PROJECT_DIR$/src/node_modules/nedb/lib/datastore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="31" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="31" />
+        <state relative-caret-position="-1752">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/datastore/index.js">
+    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="446">
+          <caret line="314" column="42" selection-start-line="314" selection-start-column="42" selection-end-line="314" selection-end-column="42" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#el-row#1;n#template#0;n#el-table-column#0;n#el-table#0;n#el-row#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src/renderer/store/modules/wallet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/identity/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="85" column="14" selection-start-line="85" selection-start-column="14" selection-end-line="85" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1629#1674#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bigchaindb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
+        <state relative-caret-position="675">
           <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src/renderer/datastore/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/marketplace/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="83" column="23" selection-start-line="83" selection-start-column="23" selection-end-line="83" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/views/form/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="114" column="29" lean-forward="true" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
+        <state relative-caret-position="782">
+          <caret line="185" column="8" selection-start-line="185" selection-start-column="8" selection-end-line="185" selection-end-column="8" />
           <folding>
             <element signature="n#style#0;n#el-collapse#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#3752#3783#0" expanded="true" />
@@ -662,30 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src/renderer/util/bitcoin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="97" column="1" selection-start-line="97" selection-start-column="1" selection-end-line="97" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/exchange/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1124">
-          <caret line="355" selection-start-line="355" selection-end-line="355" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#el-row#1;n#template#0;n#el-table-column#0;n#el-table#0;n#el-row#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/src/renderer/views/identity/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#1629#1674#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="720">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
         </state>
       </provider>
     </entry>

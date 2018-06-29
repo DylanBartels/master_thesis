@@ -45,7 +45,7 @@ export function buildMultiSigTransaction (privateKey, firstPublicKey, secondPubl
     txb.addInput(utxoTransport['txid'], 0, null, scriptPubKey)
 
     // todo: change output address to correspond to utxoEquivalent
-    txb.addOutput('1EY38FGwuSg3uRzetBwYqYh9jjbX55fHsL', ((utxoEquivalent['satoshis'] + utxoTransport['satoshis']) - 2000))
+    txb.addOutput('1Nc1e6PykezzvtUBZmyb7Gbm3DvN8K8bQs', ((utxoEquivalent['satoshis'] + utxoTransport['satoshis']) - 2000))
 
     // Initialize a private key using WIF
     const keyPair = bitcoin.ECPair.fromWIF(privateKey)
@@ -89,9 +89,7 @@ export function signSecondMultiSigTransaction (privateKey, firstPublicKey, secon
     txb.sign(0, keyPair, redeemScript, null, utxoEquivalent['satoshis'], witnessScript)
     txb.sign(1, keyPair, redeemScript, null, utxoTransport['satoshis'], witnessScript)
 
-    let txhex = txb.build().toHex()
-
-    return txhex
+    return txb.build().toHex()
   }, (error) => {
     console.log(error)
   })

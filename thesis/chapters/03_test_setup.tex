@@ -1,6 +1,6 @@
 As a new idea, this study introduces the concept of trustless transport which replaces the need of centralized intermediation of supply and demand. We propose a mechanism which punishes hostile actors automatically resulting in no conflict resolution required from central entities. \par
 In our scenario seen at figure \ref{fig:1 main overview}, we assume that the service consumer \textit{A} wants to send an physical asset to the endpoint actor \textit{B}. The third and last actor is the service provider \textit{C} who will execute the transport. Let \textit{C}, \textit{A} and \textit{B} all have an ECDSA key pair \(\{PubK_n, PrivK_n\}\) and address \(Adr_n\). \par
-The scenario starts of with \textit{A} creating a request for transport minimally containing B public key, B location and A location \(\{PubK_b, Loc_b, Loc_a\}\). This request is accepted by \textit{C} which then signs \(\{PubK_c, PrivK_c\}\) a UTXO, denoted by \textit{tx1}, containing the assets equivalent cost or more to the 2/2 multisignature address of \(\{PubK_b, PubK_c\}\) denoted by \(MSig_{bc}^{n/2}\). \par
+The scenario starts of with \textit{A} creating a request for transport minimally containing B public key, B location and A location \(\{PubK_b, Loc_b, Loc_a\}\). This request is accepted by \textit{C} which then signs \(\{PubK_c, PrivK_c\}\) a UTXO, denoted by \textit{tx1}, containing the assets equivalent value or more to the 2/2 multisignature address of \(\{PubK_b, PubK_c\}\) denoted by \(MSig_{bc}^{n/2}\). \par
 
 \begin{figure}[h]
 \centering

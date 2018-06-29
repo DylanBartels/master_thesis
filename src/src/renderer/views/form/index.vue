@@ -138,6 +138,8 @@
             }
           }
 
+          console.log(assetData)
+
           const metaData = {
             'phase': 'Introduced',
             'date': new Date().toISOString()
