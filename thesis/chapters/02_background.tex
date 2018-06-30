@@ -6,6 +6,7 @@ The PoW mechanism solves the double spend problem by garanteeing that the transa
 The average block time of the bitcoin network is 10 minutes, to garantee that the double spend would not occur on average the receiver of the transaction would have to wait 10 minutes minus the time of last found block. Fast transactions (i.e. in the order of seconds) are not reliable because low cost attacks can be mounted effectively to spoof a transaction \cite{karame2012two}.
 
 % introduce memorypool?
+% ecdsa
 
 % \subsubsection{Decentralized}
 %
@@ -32,7 +33,7 @@ Extrapolating the definition to the logistics domain means that trustless logist
 
 \subsubsection{Script}
 
-Bitcoin uses a stack-based scripting system for transactions which is intentionally not Turing-complete. One possible output script is the multisigniture script which allows any of \textit{N} out of \textit{M} signatures to spend the UTXO available in the generated multisignature address. Bitcoin provides the OP\_CHECKMULTISIG operators for multisig verification which make it possible to verify a generated transaction for the content before it is broadcasted. \par
+Bitcoin uses a stack-based scripting system for transactions which is intentionally not Turing-complete. One possible output script is the multisigniture script which allows any of \textit{N} out of \textit{M} signatures to spend the UTXO available in the generated multisignature address. To create a multisignature address \textit{M} amount of public keys need and the required amount of signatures \textit{N} to allow to send from the address need to be given. Multisignature addresses will be denoted as \(MSig_{PubK_x, PubK_y, ..}^{n/m}\) from now on. Bitcoin provides the OP\_CHECKMULTISIG operators for multisig verification which make it possible to verify a generated transaction script for the content before it is broadcasted. \par
 
 % Add with: Bitcoin and Beyond: A Technical Survey on Decentralized Digital Currencies
 

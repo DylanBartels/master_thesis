@@ -6,21 +6,21 @@
 \ProvidesClass{DylanMaster}[20/06/18 Dylan master thesis]
 \LoadClass[fleqn, 12pt]{article}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%------- Class Options -------%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DeclareOption{Nomencl}{\def\@nomencl{}} %Option acted upon at bottom.
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-\ProcessOptions\relax
-
-\ifdefined\@nomencl
-    \RequirePackage{nomencl}
-    \setlength{\nomitemsep}{-\parsep}
-    \renewcommand*{\pagedeclaration}[1]{\unskip\dotfill\hyperpage{#1}}
-    \makenomenclature
-    %In CMD, makeindex main.nlo -s nomencl.ist -o main.nls   If the filename is not "main", just replace it.
-    \renewcommand{\nomname}{List of Symbols}
-\else\fi
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %------- Class Options -------%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \DeclareOption{Nomencl}{\def\@nomencl{}} %Option acted upon at bottom.
+% \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+% \ProcessOptions\relax
+%
+% \ifdefined\@nomencl
+%     \RequirePackage{nomencl}
+%     \setlength{\nomitemsep}{-\parsep}
+%     \renewcommand*{\pagedeclaration}[1]{\unskip\dotfill\hyperpage{#1}}
+%     \makenomenclature
+%     %In CMD, makeindex main.nlo -s nomencl.ist -o main.nls   If the filename is not "main", just replace it.
+%     \renewcommand{\nomname}{List of Symbols}
+% \else\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %----- Required Packages -----%
@@ -65,6 +65,7 @@
 \RequirePackage{bera}
 \RequirePackage{listings}
 \RequirePackage{xcolor}
+\RequirePackage{nomencl}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %---------- Options ----------%
@@ -112,3 +113,11 @@
       {[}{{{\color{delim}{[}}}}{1}
       {]}{{{\color{delim}{]}}}}{1},
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------- Nomenclature -------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makenomenclature
+\cleardoublepage
+\renewcommand{\nomname}{} %% may be this is good.
+\markboth{\MakeUppercase\nomname}{\MakeUppercase\nomname}
