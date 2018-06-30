@@ -20,3 +20,6 @@ In Chapter 1 we stated our research questions and so far we answered them consid
 \noindent \textbf{Which attack vectors are possible to undermine this mechanism?} The mechanism uses the PoW solution twice to counteract the double spending possibilities of the escrow and the Ricardian contract proof of ownership. We claim that if the actors behave rational the incentive structure holds.
 
 \subsection{Evidence}
+
+To outline the proof of our incentive structure we will analyze the possible actions the actors can take during the various stages of the mechanism. Starting at the pickup exchange once the service provider has provided $tx_1$ the service consumer can verify the content of the $tx_1$, a example of a transaction script byte-map can be found in Appendix D. 
+\[\{EqC, PubK_c\}\in tx_1 \land PrivK_c \notin tx_1\]
