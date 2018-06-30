@@ -5,12 +5,11 @@ To analyze the obtained result of OpenLogistics will be devided into three parts
   \item Endpoint actor
   \item Service provider
 \end{enumerate}
-The \textbf{service consumer} uses OpenLogistics because he wants to transport a physical good. He can create and sign a Ricardian contract which will than be stored on BigchainDB. This represents a request for transport, the ownership of the physical good and includes the information regarding the transport, an example of the data model can be found in appendix A. \par
-The \textbf{service provider} can acces the OpenLogistics marketplace orderbook and accept the contract in his local client. Upon accepting
-
-What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
-
-The information regarding the physical asset is captured inside an ricardian contract \cite{}, an example of the data model can be found in appendix A. This ricardian contract is stored with bigchaindb and the user which creates and signs the contract owns the contract. This user is the only one who can transfer it to another bigchaindb keypair. This creates a mechanism where verification can always take place because there is full transparancy on assets handled. Ownership of the asset is proofable. A reputation system could find it's place if aggregation of transactions on a specific bigchaindb keypair represents transport contracts completed.
+The \textbf{service consumer} uses OpenLogistics because he wants to transport a physical good. He can create and sign a Ricardian contract which will than be stored on BigchainDB. This represents a request for transport, the ownership of the physical good and includes the information regarding the transport, an example of the data model can be found in appendix B. \par
+The \textbf{service provider} can acces the OpenLogistics marketplace orderbook and accept the contract in his local client. Upon accepting he creates a $tx_1$ and travels to the location of the service consumer. Upon the \textbf{service provider} arriving at the \textbf{service consumer} the \textbf{service consumer} acceses the client and selects his own Ricardian Contract and the pickup exchange takes place illustarted in figure \ref{fig:2 first exchange}. The \textbf{service provider} now moves to the \textbf{endpoint actor} and the \textbf{endpoint actor} acceses the client and the dropoff exchange takes place illustrated in figure \ref{fig:3 dropoff exchange}. Eventually the \textbf{service provider} endup with $tx_3$ and can claim the reward in his own client for his provided labor. \par
+% What is really being exchanged is the right to the transaction id by being possible to acces it with the private key. What the transaction id represent in the orderbook is proof that asset ownership is possible to acces. The exchange of owner innitiates the escrow balance which is equavalent to the asset value.
+%
+% The information regarding the physical asset is captured inside an ricardian contract \cite{}, an example of the data model can be found in appendix A. This ricardian contract is stored with bigchaindb and the user which creates and signs the contract owns the contract. This user is the only one who can transfer it to another bigchaindb keypair. This creates a mechanism where verification can always take place because there is full transparancy on assets handled. Ownership of the asset is proofable. A reputation system could find it's place if aggregation of transactions on a specific bigchaindb keypair represents transport contracts completed.
 
 \subsection{Transparancy}
 
@@ -23,23 +22,26 @@ An example of a mainnet testrun can be seen locally, if copy of blockchain is pr
   \item Multisig (Endpoint actor + Service provider): 3MiFyavsRpMZBzfxFk94WdeZUnbQP1hdDy
 \end{enumerate}
 
-Actor B actually has no UTXO on his address, this is due only using his keypair to sign the transactions. The function Actor B actually fulfills is being the oracle for conflict resolution upon dropoff exchange by signing or not.\par
+The \textbf{service provider} actually has no transaction being broadcasted from his address, this is due only using his keypair to sign the transactions. The function \textbf{service provider} actually fulfills is being the oracle for conflict resolution upon dropoff exchange by signing or not.\par
 The asset transferring taking place can also be seen by exploring bigchaindb addresses. \par
 The aggregation of the movement of assets between addresses can be used for a reputation system.
 
-% todo: add ricardian contract example of data model in appendix
-\subsection{Metrics}
+% \subsection{Metrics}
+%
+% Trustless (Conflict intermediation)
+% Time (blocktime, zero confirmations, other networks)
+% Privacy (what is known)
+% Cost (3x transaction fee)
+% Attack vectors (in conclusion)
 
-Trustless (Conflict intermediation)
-Time (blocktime, zero confirmations, other networks)
-Privacy (what is known)
-Cost (3x transaction fee)
-Attack vectors (in conclusion)
+\subsection{Adventages \& Disadventages}
 
-% \subsection{Adventages \& Disadventages}
+The advantage of the facilitated mechanism of OpenLogistics is that if all actors agree upon the set rules \textit{anybody} can participate. We chose to implement the payment and escrow mechanism on the Bitcoin network, which is in the blockchain domain perceived as simpler and less vulnerable in terms of incentive structure than other networks. The downside is that the average blocktime is 10 minutes, which is not a viable period to wait when the pickup exchange is taking place. Other blockchain alternatives can be chosen depending as long as they support multisignature. \par
+We chose to implement the OpenLogistics client with Javascript libraries which can be developed towards mobile. 
 
+Disadvantages is that you have to spend three transaction fees to make the mechanism work.
 % Bitcoin, by comparison, is orders of magnitude simpler and less vulnerable in terms of incentive structure
 
-% \subsection{Claim}
-%
-% We claim that OpenLogistics facilitates peer-to-peer decentralized transport contracts while aiming to create trustless intermediation. Through the evaluation of the parameters of peer-to-peer, decentralization and
+\subsection{Claim}
+
+We claim that OpenLogistics facilitates peer-to-peer decentralized transport contracts while aiming to create trustless intermediation. Through the evaluation of the research questions in Chapter 5 we will provided evidence of our claim.
