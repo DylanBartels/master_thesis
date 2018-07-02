@@ -5,21 +5,135 @@ In Chapter 1 we stated our research questions and so far we answered them consid
 \noindent \textbf{How can you provide a mechanism to facilitate peer-to-peer decentralized trustless transport contracts?} From our research we conclude that to facilitate this mechanism a Bitcoin multisignature escrow incentive strucure can incentivize the transportation without relying on trusted intermediaries.
 
 \bigbreak
-\noindent \textbf{Can trustless intermediation exists on this marketplace without a custodian for dispute prevention and resolution?} Trustless intermediation cannot take place with the transport of physical goods. During the process of transport a person will \textit{always} be custodian of the physical good.
+\noindent \textbf{Can trustless intermediation exists on this marketplace without centralized dispute resolution?} Trustless intermediation cannot take place with the transport of physical goods. During the process of transport a person will \textit{always} be custodian of the physical good. Due to this restriction you can never garantee the expected outcome, centralized conflict resolution will remain to play a roll in transport.
+% The provided incentive mechanism assumes that the all actors behave rational during the process and do not deliberately punish themself by working against the mechanism.
 
 \bigbreak
-\noindent \textbf{How decentralized is the mechanism?} We claim that the mechanism is as decentralized as the two networks it is build upon.
+\noindent \textbf{How decentralized is the mechanism?} We claim that the mechanism supporting network is as decentralized as the two networks it is build upon.
 
 \bigbreak
 \noindent \textbf{To what degree do oracles play a role in the verification of the information?} The verification of information by an oracle takes place twice during the mechanism. The first time by the service provider when he verifies that the physical asset is simalair to the stated Ricardian Contract when it is being picked up. The second time by the endpoint actor when he verifies that the physical asset being delivered is correct.
 
 \bigbreak
-\noindent \textbf{What level of anonymity is possible?} We claim that the starting point and endingpoint of the transport identity will always be known. However the transport actor can maintain privacy in this mechanism, the only aspect of privacy he will have to turn in is the sight of his physical apperance to the service consumer and endpoint actor.
+\noindent \textbf{What level of anonymity is possible?} We claim that the starting point and endingpoint of the transport identity will always be known. However the service provider can maintain privacy in this mechanism, the only aspect of privacy he will have to turn in is the sight of his physical apperance to the service consumer and endpoint actor.
 
 \bigbreak
 \noindent \textbf{Which attack vectors are possible to undermine this mechanism?} The mechanism uses the PoW solution twice to counteract the double spending possibilities of the escrow and the Ricardian contract proof of ownership. We claim that if the actors behave rational the incentive structure holds.
+\newpage
 
 \subsection{Evidence}
 
-To outline the proof of our incentive structure we will analyze the possible actions the actors can take during the various stages of the mechanism. Starting at the pickup exchange once the service provider has provided $tx_1$ the service consumer can verify the content of the $tx_1$, a example of a transaction script byte-map can be found in Appendix D. 
+% To outline the proof of our incentive structure we will analyze the possible actions the actors can take during the various stages of the mechanism. Starting at the pickup exchange once the service provider has provided $tx_1$ the service consumer can verify the content of the $tx_1$, an example of a transaction script byte-map can be found in Appendix D.
+% \[\{EqC, PubK_c\}\in tx_1 \land PrivK_c \notin tx_1\]
+% During the pickup exchange the service consumer can perform the following malicious actions:
+%
+% \begin{enumerate}
+%   \item Malicous behaviour with tx2
+%   \begin{enumerate}
+%     \item wrong amount
+%     \item wrong end point addresses
+%     \item do not broadcast the script
+%   \end{enumerate}
+%   \item Wrong Rc change of ownership
+%   \item Not give the asset to C
+% \end{enumerate}
+%
+% If the service consumer performs any malicious behaviour during the pickup exchange conflict resolution can be applied, his address is available in the ricardian contract which is owned by the service provider if he verifies the process. \par
+% If the service provider deviates from the contract when he is the custodian and moving from A to B
+
+To outline the proof of our incentive structure we will analyze the possible malicious actions the actors can take during the two exchange stages of the mechanism.
+
+\subsubsection{Malicious actions pickup exchange}
+
+The asset pickup exchange has the following possible malicious actions:
+\begin{enumerate}
+  \item Service provider (C)
+  \begin{enumerate}
+    \item Signing tx1
+    \begin{enumerate}
+      \item Wrong amount
+      \item Wrong endpoint address
+      \item No signature
+    \end{enumerate}
+  \end{enumerate}
+  \item Service Consumer (A)
+  \begin{enumerate}
+    \item Signing tx2
+    \begin{enumerate}
+      \item Wrong amount
+      \item Wrong endpoint address
+      \item No signature
+    \end{enumerate}
+    \item Ricardian Contract
+    \begin{enumerate}
+      \item Giving wrong pickup exchange information in Rc
+      \item Change his mind on request
+      \item Wrong change of ownership address
+    \end{enumerate}
+    \item Physical asset
+    \begin{enumerate}
+      \item Not giving the physical asset to C
+      \item Incorrect content
+    \end{enumerate}
+  \end{enumerate}
+\end{enumerate}
+
+\bigbreak
+\noindent\textbf{Result malicious actions}
+\bigbreak
+\noindent\textbf{1.a.} A can verify the content of the $tx_1$, an example of a transaction script byte-map can be found in Appendix D.
 \[\{EqC, PubK_c\}\in tx_1 \land PrivK_c \notin tx_1\]
+\noindent\textbf{2.a.} C can verify the content of the $tx_2$, an example of a transaction script byte-map can be found in Appendix D.
+\[\{Tr, PubK_a\}\in tx_2 \land PrivK_a \notin tx_2\]
+\noindent\textbf{2.b.i.} C would lose the laborcost of moving to $loc_a$ \par
+\noindent\textbf{2.b.ii.} C would lose the laborcost of moving to $loc_a$ \par
+\noindent\textbf{2.b.iii.} C can verify the change of ownership of the Rc before it is being broadcasted \par
+\noindent\textbf{2.c.i.} C can organize contract enforecement of Rc through legal institutions because Rc can be legally binding and $loc_a$ is known \par
+\noindent\textbf{2.c.ii.} B can organize contract enforecement of Rc through legal institutions because Rc can be legally binding and $loc_a$ is known \par
+
+\subsubsection{Malicious actions dropoff exchange}
+
+Possible malicious behaviour at asset dropoff exchange:
+\begin{enumerate}
+  \item Service provider (C)
+  \begin{enumerate}
+    \item Ricardian Contract
+    \begin{enumerate}
+      \item Wrong change of ownership address
+    \end{enumerate}
+    \item Physical asset
+    \begin{enumerate}
+      \item Opening the package and keeping it
+      \item Opening package and continue contract
+    \end{enumerate}
+  \end{enumerate}
+  \item Endpoint actor (B)
+  \begin{enumerate}
+    \item Signing tx3
+    \begin{enumerate}
+      \item Wrong amount
+      \item Wrong endpoint address
+      \item No signature
+    \end{enumerate}
+    \item Ricardian Contract
+    \begin{enumerate}
+      \item Giving wrong dropoff exchange information in Rc
+      \item State incorrect content
+    \end{enumerate}
+  \end{enumerate}
+\end{enumerate}
+
+\bigbreak
+\noindent\textbf{Result malicious actions}
+\bigbreak
+\noindent\textbf{1.a.} B can verify the change of ownership of the Rc before it is being broadcasted \par
+\noindent\textbf{1.b.i.} C will lose $\{EqC, Tr\}$ \par
+\noindent\textbf{1.b.ii.} Depending on content it might be prevented by chosen packaging, but will not be prevented through incentive mechanism. \par
+
+\noindent\textbf{2.a.} C can verify the content of the $tx_3$, an example of a transaction script byte-map can be found in Appendix D.
+\[\{\{EqC, Tr\}, PubK_b\}\in tx_3 \land PrivK_b \notin tx_3\]
+\noindent\textbf{2.b.i.} C can keep package or return to A.\par
+\noindent\textbf{2.b.ii.} If B does not agree with content he will not sign to release the escrow. C can keep package or return to A.\par
+
+% Attack vectors:
+% Eating the difference in equivalance cost if the reputation cost of the starting actor is benefitial to the actor eating the costs

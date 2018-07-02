@@ -50,3 +50,5 @@ Before $\{tx_1, tx_2\}$ get broadcasted \textit{A $\lor$ C} can individually ver
 \end{figure}
 
 At the end of the second exchange actor $C$ now owns $tx_3$ which has been signed by $B$. He can now sign and broadcast the transaction with his own keypair whenever he wants to redeem the funds.
+
+\[SignTransaction(PrivK_c)\colon\{\{tx_1, tx_2\}, MSig_{bc}, Adr_c\}\mapsto tx_3\]
