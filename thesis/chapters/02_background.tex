@@ -1,24 +1,9 @@
 \subsection{Bitcoin}
 
 Introduced by the anonymous Satoshi Nakomoto in 2008, Bitcoin (BTC) is a decentralized peer-to-peer currency system. Bitcoin allows digital payments without going through a financial institution and solves the double spend problem by hashing timestamped transactions into an continues chain of hash-based Proof-of-Work (PoW) \cite{nakamoto2008bitcoin}. Payment are possible by creating transactions, signing them and sending them to Bitcoin addresses. The user has a public/private keypair whereby addresses are a mapping function of the public key and the private key can sign transactions. Creating of transactions is only possible if they have been send to one of the user owned addresses and are then called unspent transactions (UTXO).\par
-The broadcasted transactions are send to the memorypool and included in blocks once the network has formed consensus on the correct order of transactions. To generate a block the miners  have to find a nonce value, peers than include it in a block which allows anybody to verify the PoW. Miners get rewarded upon generating a block thus incentivizing to support the network with computational power. The generated computational power of the network, also expressed in hash rate or hash power, protects the intregrity of the PoW chain. For a user the definition of owning a bitcoin is the right to sign a UTXO with your keypair.\par
-The PoW mechanism solves the double spend problem by garanteeing that the transaction is not spend twice when it is included in a block. For a malicious actor to double spend a BTC without detection they would have to recompute all previous blocks, so as long as the honest peers in the network exceed the malicious the intregrity of the work is garanteed \cite{nakamoto2008bitcoin}. \par
-The average block time of the bitcoin network is 10 minutes, to garantee that the double spend would not occur on average the receiver of the transaction would have to wait 10 minutes minus the time of last found block. Fast transactions (i.e. in the order of seconds) are not reliable because low cost attacks can be mounted effectively to spoof a transaction \cite{karame2012two}.
-
-% introduce memorypool?
-% ecdsa
-
-% \subsubsection{Decentralized}
-%
-% Centralization is very efficient compared to decentralization. The forming of consensus requers high amount of value by putting energy in computation with the proof of work algorithm, going back to the byzantine fault tolerance trusting other parties to comform to the input of information will be more costly. The function decentralization fulfills is raising the cost of attacking the consensus which is being formed every input stream of information captured in blocks. The sensorship resistance of decentralization is the function it excels at.\par
-% Following this premises in the domain of logistics centralizated entities fulfill trustworthy responsibllities which cannot compete with decentralized services. This is unless this service wants to benefit the cencorship resistance which could be made possible. Censoring is not often applied in logistics, some examples along many are:
-% \begin{enumerate}
-%   \item Transportation of written religious information in corresponding religion underpressed areas
-%   \item Transportation of illicit goods
-%   \item Entry level of competition
-% \end{enumerate}
-% The other option which logistics could benefit in the model of trade-offs is:
-% The costs of the controlling the goods to be transported and transporting being more constly than actually transporting the goods without intermediation of checking on the parameters of censorship.
+The broadcasted transactions are send to the memory pool and included in blocks once the network has formed consensus on the correct order of transactions. To generate a block the miners  have to find a nonce value, peers than include it in a block which allows anybody to verify the PoW. Miners get rewarded upon generating a block thus incentivising to support the network with computational power. The generated computational power of the network, also expressed in hash rate or hash power, protects the integrity of the PoW chain. For a user the definition of owning a bitcoin is the right to sign a UTXO with your keypair.\par
+The PoW mechanism solves the double spend problem by guaranteeing that the transaction is not spend twice when it is included in a block. For a malicious actor to double spend a BTC without detection they would have to recompute all previous blocks, so as long as the honest peers in the network exceed the malicious the integrity of the work is guaranteed \cite{nakamoto2008bitcoin}. \par
+The average block time of the bitcoin network is 10 minutes, to guarantee that the double spend would not occur on average the receiver of the transaction would have to wait 10 minutes minus the time of last found block. Fast transactions (i.e. in the order of seconds) are not reliable because low cost attacks can be mounted effectively to spoof a transaction \cite{karame2012two}.
 
 \subsubsection{Trustless}
 
@@ -28,36 +13,24 @@ Markus Klems et al. define trustless and trustless intermediation as follows:
    A system property which guarantees rules of interaction that are known to and agree upon by all participants of the system, and which cannot be unilaterally changed. These guarantees are enforced through, what we call trustless intermediation, a set of mechanisms for \textit{decentralizing the enforcement of rules in a system}, thereby removing the need for and existence of trusted intermediaries. \cite{trustlessIntermediationInBCServiceMarket}
 \end{displayquote}
 
-Bitcoin can be defined as a trustless system because once an UTXO is signed and broadcasted to the mempool with a high enough transaction fee it is garanteed that it will be put inside a block. No intermediation takes place for this mechanism to occur. The mechanism cannot be changed \textit{easily}, only if a hard forking is proposed including a code change. However this chain split would not count as bitcoin unless it is backed by the majority of hash rate thus being classified as longest chain \cite{nakamoto2008bitcoin}. \par
-Extrapolating the definition to the logistics domain means that trustless logistics can be defined as an logistic contract which has predefined unchangeable rules and no need for trusted intermediaries.
+Bitcoin can be defined as a trustless system because once an UTXO is signed and broadcasted to the memory pool with a high enough transaction fee it is guaranteed that it will be put inside a block. No intermediation takes place for this mechanism to occur. The mechanism cannot be changed \textit{easily}, only if a hard forking is proposed including a code change. However this chain split would not count as bitcoin unless it is backed by the majority of hash rate thus being classified as longest chain \cite{nakamoto2008bitcoin}. \par
+Extrapolating the definition to the logistics domain means that trustless logistics can be defined as an logistic contract which has predefined unchangeable rules without the need for trusted intermediaries.
 
 \subsubsection{Script}
 
-Bitcoin uses a stack-based scripting system for transactions which is intentionally not Turing-complete. One possible output script is the multisigniture script which allows any of \textit{N} out of \textit{M} signatures to spend the UTXO available in the generated multisignature address. To create a multisignature address \textit{M} amount of public keys need and the required amount of signatures \textit{N} to allow to send from the address need to be given. Multisignature addresses will be denoted as \(MSig_{PubK_x, PubK_y, ..}^{n/m}\) from now on. Bitcoin provides the OP\_CHECKMULTISIG operators for multisig verification which make it possible to verify a generated transaction script for the content before it is broadcasted. \par
-
-% Add with: Bitcoin and Beyond: A Technical Survey on Decentralized Digital Currencies
-
-% \subsection{Smart Contracts}
-%
-% Smart contracts are digital representations of a contracts which will be activated once certain input activates parameters. The contracts promise to:
-%  enforce contracts automatically
-% Take out the middle man in contract construction, execution and enforcement
-% A normal contract
-% smart contracts are very difficult to implement well. They all trust on some oracle input which has to be correct for contracts to behave.  but how can you garantee the input is correct? Conesnsus on the correctness of data which is stored depends on the correctness of input. If the oracles who register the data are in full control of input they are lone ruler of correctness disregarding the consensus.
+Bitcoin uses a stack-based scripting system for transactions which is intentionally not Turing-complete. A typical Bitcoin address is known as a Pay-to-PubKeyHash (P2PKH) address and can be identified by the $1$ prefix, an example of such an address alongside other address types can be found in Chapter 4.1. \par
+% todo: appendix fix
+Another important address is the Pay-to-ScriptHash (P2SH) address identified by the $3$ prefix. The Pay-to-ScriptHash (P2SH) address type allows any of \textit{N} out of \textit{M} signatures to spend the UTXO available in the P2SH address. To send a P2SH transaction \textit{M} amount of public keys are needed and the required amount of signatures \textit{N} to allow to redeem from the address need to be given. \textit{M-of-N} multisignature P2SH addresses owned by $\{PubK_x, PubK_y\}$ will be denoted as \(Adr_{xy}^{m/2}\) from now on. \par
+The Bitcoin scripting language provides operators which can be applied to created transaction scripts. The OP\_CHECKMULTISIG operators for multisig verification makes it possible to verify a generated transaction script for the content before it is broadcasted. \par
 
 \subsection{Ricardian Contracts}
 
 A Ricardian contract is designed to register a legally binding digital document to a specific object \cite{grigg2004ricardian}. The contract puts all information in a format which is parsable by software and humans. It represents a legal agreement between individuals and a protocol for integrating the agreement securely within a infrastructure. \par
 The Ricardian contract can be used to form an agreement by forming the liability when trading with another party. It can represent a unit of goods or service and uses signed agreement between the parties which cannot be falsified once signed. \par
-Just as smart contracts \cite{sc} they can achieve taking out of the middle man in contract construction, execution and enforcement. A Ricardian contract is acceptable withing the existing legislation frameworks.
-
-% Supply chain contracts can be complex. Change of ownership, pro-formas, bills of lading, payment terms, quality standards, and letters of credit all create contract complexities
+Just as smart contracts \cite{sc} they can achieve taking out of the middle man in contract construction, execution and enforcement. A Ricardian contract is acceptable within the existing legislation frameworks.
 
 \subsection{Decentralized Marketplace}
 
 Markus Klems et al. define centralized marketplaces\cite{trustlessIntermediationInBCServiceMarket} as providing mechanisms to facilitate efficient spot trades between numbers of sellers and buyers by providing match-making and payment transaction processes that are accompanied by trust-building mechanisms, most importantly, reputation and dispute resolution systems. Some examples of centralized marketplaces for logistics are Postmates for deliveries, Uber for the transport of people and Uship for shipping of goods. These peer-to-peer marketplaces facilitate the intermediation process of transport contracts.\par
 Decentralized marketplaces facilitate the same spot trades without a central provider and intermediaries. The upside of such a mechanism is the lowering of the entry barrier \cite{einav2016peer}, no intermediation fees \cite{openbazaar}, increasing sensorship resistance \cite{decentralMarket}, and improving privacy \cite{decentralizedAnonymousReputation}.
 % Oracles
-
-% In the domain of logistical contracts for being the custodian for transport settled identities work on reputation based systems to create trust for transport. If decentralized trustless aggregation of contracts could take place in a orderbook everybody should be able to fulfill the same side of this marketplace, supply and demand.
-% The marketplace is a orderbook filled with digital representations of transport contracts. The contracts are demand of transport from place A to B, the supply is facilitators of this transport. Once the order is met and work has to be facilitated the supply picks up the asset and brings it to designated place of dropoff. The three actors: pickup, drop-off and transport are represented by a keypair which gives the right of ownership throughtout the process of the asset. This ownership is the right to the transport contract and asset being transported, the data it contains is the pickup and dropoff point.
