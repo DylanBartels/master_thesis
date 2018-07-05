@@ -3,12 +3,16 @@
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \begin{document}
 \mytitlepage
-\input{chapters/abstract}
-\newpage
 
+\input{chapters/abstract}
+
+\newpage
+\thispagestyle{empty}
 \tableofcontents
 
 \newpage
+\clearpage
+\setcounter{page}{1}
 \section{Introduction}
 \input{chapters/01_introduction}
 

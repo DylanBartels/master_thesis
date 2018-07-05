@@ -1,8 +1,6 @@
 As a new idea, this study introduces a framework for trustless insurance of transport contracts thus replacing the need for centralized intermediation. We propose a mechanism which punishes hostile actors automatically resulting in no conflict resolution required from central entities. The meaning of used abbreviations and function structures in this chapter can be found in the list of symbols appendix A.\par
 In our scenario seen at figure \ref{fig:1 main overview}, we assume that the service consumer $A$ wants to send an physical object to the endpoint actor $B$. The third and last actor is the service provider $C$ who will execute the transport contract. Let $A$, $B$ and $C$ all have an Bitcoin public-private key and Bitcoin address which is created with a mapping function from the public key.
-% \[CreateKeypair() = \{PubK_i, PrivK_i\}\]
 \[CreateKeypair(A) = \{A_{pk}, A_{sk}\}\]
-% \[CreateAddress \colon PubK_i \rightarrow Adr_i\]
 \[CreateAddress \colon A_{pk} \rightarrow A_{adr}\]
 The scenario starts of with $A$ creating a Ricardian contract representing a request for transport, this contract contains $A$ location ($A_{loc}$), $B$ location ($B_{loc}$), $B$ public key ($B_{pk}$), physical object equivalent value ($Ev$) or more and the transport reward ($Tr$).
 \[\{A_{loc}, B_{loc}, B_{pk}, Ev, Tr\} \subseteq Rc\]

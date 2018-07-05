@@ -1,13 +1,14 @@
 \nomenclature[01]{$A$}{Actor $A$}
-\nomenclature[02]{$\{PubK_a, PrivK_a\}$}{EDSCA keypair containing private and public key owned by actor $A$}
-\nomenclature[03]{$Adr_a$}{Bitcoin address owned by $A$}
-\nomenclature[04]{$MSig_{ab}$}{Multisignature address, a $tx_i$ originating from this address can be signed by private key of $A \lor B$}
-\nomenclature[05]{$Loc_a$}{Physical location of $A$}
+\nomenclature[02]{$\{A_{pk}, A_{sk}\}$}{EDSCA keypair containing public and private key owned by actor $A$}
+\nomenclature[03]{$A_{adr}$}{Bitcoin address owned by $A$}
+\nomenclature[04]{$AB_{adr}^{m/n}$}{Multisignature address, a $tx_i$ originating from this address can be signed by private key of $A \lor B$ and needs m-of-n signatures to be valid}
+\nomenclature[05]{$A_{loc}$}{Physical location of $A$}
 \nomenclature[06]{$tx_1$}{Transaction script number 1}
 \nomenclature[07]{$A \rightarrow B$}{Exchange physical asset from $A$ to $B$}
 \nomenclature[08]{$Rc$}{Ricardian Contract}
-\nomenclature[09]{$EqC$}{Equivalent cost of the physical asset}
-\nomenclature[10]{$Tr$}{Reward for transporting the physical asset}
-\nomenclature[11]{$GenerateAddress(PubK_n)\colon Adr_n$}{Generating a bitcoin address with script language mapping function}
-\nomenclature[12]{$SignTransaction(PrivK_y)\colon\{TRANSACTION_INPUT, y, z\}\mapsto tx_i$}{Signing a transaction requires a unspent transaction input, from bitcoin address $y$ to bitcoin address $z$ and resulting in transaction script $tx_i$}
+\nomenclature[09]{$Ev$}{Equivalent value of the physical object}
+\nomenclature[10]{$Tr$}{Reward for transporting the physical object}
+\nomenclature[11]{$GenerateAddress(N_{pk})\colon N_{adr}$}{Generating a bitcoin address with script language mapping function}
+\nomenclature[12]{$SignTransaction \colon \{w, x, y, z\} \rightarrow tx_i$}{Signing a transaction requires a unspent transaction input $w$ from the start address $x$ to the end address $y$, the private key $z$ will result in a signature onto the transaction $tx_i$}
+
 \printnomenclature[4in]
