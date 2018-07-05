@@ -8,8 +8,8 @@ In Chapter 1 we stated our research questions and so far we answered them consid
 \noindent \textbf{Can trustless intermediation exists on this marketplace without centralized dispute resolution?} Trustless intermediation cannot take place with the transport of physical goods. During the process of transport a person will \textit{always} be custodian of the physical good. Due to this restriction you can never garantee the expected outcome, centralized conflict resolution will remain to play a roll in transport.
 % The provided incentive mechanism assumes that the all actors behave rational during the process and do not deliberately punish themself by working against the mechanism.
 
-\bigbreak
-\noindent \textbf{How decentralized is the mechanism?} We claim that the mechanism supporting network is as decentralized as the two networks it is build upon.
+% \bigbreak
+% \noindent \textbf{How decentralized is the mechanism?} We claim that the mechanism supporting network is as decentralized as the two networks it is build upon.
 
 \bigbreak
 \noindent \textbf{To what degree do oracles play a role in the verification of the information?} The verification of information by an oracle takes place twice during the mechanism. The first time by the service provider when he verifies that the physical asset is simalair to the stated Ricardian Contract when it is being picked up. The second time by the endpoint actor when he verifies that the physical asset being delivered is correct.
@@ -34,29 +34,29 @@ The asset pickup exchange has the following possible malicious actions:
     \item Signing $tx_1$
     \begin{enumerate}
       \item Wrong amount equivalent value ($Ev$)
-      \item No signature from start address ($Sig_c$)
-      \item Wrong endpoint address ($Adr_b$)
+      \item No signature from start address ($C_{sig}$)
+      \item Wrong endpoint address ($B_{adr}$)
     \end{enumerate}
-    \[\{Ev, Sig_c, Adr_{bc}^{2/2}\}\not\in tx_1\]
+    \[\{Ev, C_{sig}, BC_{adr}^{2/2}\}\not\in tx_1\]
   \end{enumerate}
   \item Service Consumer ($A$)
   \begin{enumerate}
     \item Signing $tx_2$
     \begin{enumerate}
       \item Wrong amount transport reward ($Tr$)
-      \item No signature from start address ($Sig_a$)
-      \item Wrong endpoint address ($Adr_{bc}^{2/2}$)
+      \item No signature from start address ($A_{sig}$)
+      \item Wrong endpoint address ($BC_{adr}^{2/2}$)
     \end{enumerate}
-    \[\{Tr, Sig_a, Adr_{bc}^{2/2}\}\not\in tx_2\]
+    \[\{Tr, A_{sig}, BC_{adr}^{2/2}\}\not\in tx_2\]
     \item Ricardian Contract ($Rc$)
     \begin{enumerate}
-      \item Giving wrong pickup exchange location ($Loc_a$) in $Rc$
-      \item Giving wrong dropoff exchange location ($Loc_b$) in $Rc$
-      \item Giving wrong dropoff exchange public key ($PubK_b$) in $Rc$
+      \item Giving wrong pickup exchange location ($A_{loc}$) in $Rc$
+      \item Giving wrong dropoff exchange location ($B_{loc}$) in $Rc$
+      \item Giving wrong dropoff exchange public key ($B_{pk}$) in $Rc$
       \item Change his mind on request
       \item Wrong change of ownership address
     \end{enumerate}
-    \[\{PubK_b, Loc_b, Loc_a, EqC, Tr\} \not\subseteq Rc\]
+    \[\{A_{loc}, B_{loc}, B_{pk}, Ev, Tr\} \not\subseteq Rc\]
     \item Physical Asset
     \begin{enumerate}
       \item Not giving the physical asset to $C$
@@ -68,14 +68,14 @@ The asset pickup exchange has the following possible malicious actions:
 \bigbreak
 \noindent\textbf{Result malicious actions}
 \bigbreak
-\noindent\textbf{1.a.} $A$ can verify the content of the $tx_1$ before broadcasting, an example of a transaction script byte-map can be found in Appendix D. $Priv_c$ cannot be extracted from $tx_1$ after it has been signed and encoded into a transaction script.
-\[VerifyTransaction(Rc, tx_1)\colon \{Ev, Adr_b\} \in Rc \land \{Ev, Sig_c,  Adr_{bc}^{2/2}\} \in tx_1\]
+\noindent\textbf{1.a.} $A$ can verify the content of the $tx_1$ before broadcasting, a transaction script byte-map can be found in Appendix D. $C_{sk}$ cannot be extracted from $tx_1$ after it has been signed and encoded into a transaction script. $A$ also has to wait till the transaction is confirmed into the ledger before proceeding with the process.
+\[VerifyTransaction(Rc, tx_1)\colon \{Ev, B_{adr}\} \in Rc \land \{Ev, C_{sig},  BC_{adr}^{2/2}\} \in tx_1\]
 \noindent\textbf{2.a.} C can verify the content of the $tx_2$
-\[VerifyTransaction(Rc, tx_2)\colon\{Tr, Adr_b\} \in Rc \land \{Tr, Sig_a, Adr_{bc}^{2/2}\} \in tx_2\]
-\noindent\textbf{2.b.i.} C would lose the laborcost of moving to $loc_a$ \par
-\noindent\textbf{2.b.ii.} C would lose the laborcost of moving to $loc_a$ \par
+\[VerifyTransaction(Rc, tx_2)\colon\{Tr, B_{adr}\} \in Rc \land \{Tr, A_{sig}, BC_{adr}^{2/2}\} \in tx_2\]
+\noindent\textbf{2.b.i.} C would lose the laborcost of moving to $A_{loc}$ \par
+\noindent\textbf{2.b.ii.} C would lose the laborcost of moving to $A_{loc}$ \par
 \noindent\textbf{2.b.iii.} C can verify the change of ownership of the $Rc$ before it is being broadcasted \par
-\noindent\textbf{2.c.} $C$ can organize contract enforecement of $Rc$ through legal institutions because $Rc$ can be legally binding and $loc_a$ is known. \par
+\noindent\textbf{2.c.} $C$ can organize contract enforecement of $Rc$ through legal institutions because $Rc$ can be legally binding and $A_{loc}$ is known. \par
 
 \subsubsection{Malicious actions dropoff exchange}
 
@@ -98,10 +98,10 @@ Possible malicious behaviour at asset dropoff exchange:
     \item Signing $tx_3$
     \begin{enumerate}
       \item Wrong amount ($\{Ev, Tr\}$)
-      \item No signature from start address ($Adr_{bc}^{2/2}$)
-      \item Wrong endpoint address ($Adr_c$)
+      \item No signature from start address ($BC_{adr}^{2/2}$)
+      \item Wrong endpoint address ($C_{adr}$)
     \end{enumerate}
-    \[\{\{Ev, Tr\}, Adr_{bc}^{2/2}, Adr_c\}\not\in tx_3\]
+    \[\{\{Ev, Tr\}, BC_{adr}^{2/2}, C_{adr}\}\not\in tx_3\]
     \item Ricardian Contract
     \begin{enumerate}
       \item Giving wrong dropoff exchange information in $Rc$
@@ -118,7 +118,7 @@ Possible malicious behaviour at asset dropoff exchange:
 \noindent\textbf{1.b.ii.} Depending on content it might be prevented by chosen packaging, but will not be prevented through incentive mechanism. \par
 
 \noindent\textbf{2.a.} $C$ can verify the content of the $tx_3$
-\[VerifyTransaction(Rc, tx_3)\colon\{Ev, Tr, Adr_b\} \in Rc \land \{Tr, Adr_a, Adr_{bc}^{2/2}\} \in tx_2\]
+\[VerifyTransaction(Rc, tx_3)\colon\{Ev, Tr, B_{adr}\} \in Rc \land \{Tr, A_{adr}, BC_{adr}^{2/2}\} \in tx_2\]
 \noindent\textbf{2.b.i.} $C$ can keep package or return to $A$.\par
 \noindent\textbf{2.b.ii.} If $B$ does not agree with content he will not sign to release the escrow. $C$ can keep package or return to $A$.\par
 

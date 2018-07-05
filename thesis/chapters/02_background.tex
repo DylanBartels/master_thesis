@@ -18,16 +18,15 @@ Extrapolating the definition to the logistics domain means that trustless logist
 
 \subsubsection{Script}
 
-Bitcoin uses a stack-based scripting system for transactions which is intentionally not Turing-complete. A typical Bitcoin address is known as a Pay-to-PubKeyHash (P2PKH) address and can be identified by the $1$ prefix, an example of such an address alongside other address types can be found in Chapter 4.1. \par
-% todo: appendix fix
-Another important address is the Pay-to-ScriptHash (P2SH) address identified by the $3$ prefix. The Pay-to-ScriptHash (P2SH) address type allows any of \textit{N} out of \textit{M} signatures to spend the UTXO available in the P2SH address. To send a P2SH transaction \textit{M} amount of public keys are needed and the required amount of signatures \textit{N} to allow to redeem from the address need to be given. \textit{M-of-N} multisignature P2SH addresses owned by $\{PubK_x, PubK_y\}$ will be denoted as \(Adr_{xy}^{m/2}\) from now on. \par
+Bitcoin uses a stack-based scripting system for transactions which is intentionally not Turing-complete. A typical Bitcoin address is known as a Pay-to-PubKeyHash (P2PKH) address and can be identified by the $1$ prefix, an example of such an address alongside other address types can be found in Chapter 4.1. Table \ref{tab:addresses}\par
+Another important address is the Pay-to-ScriptHash (P2SH) address identified by the $3$ prefix. The Pay-to-ScriptHash (P2SH) address type allows any of \textit{N} out of \textit{M} signatures to spend the UTXO available in the P2SH address. To send a P2SH transaction \textit{M} amount of public keys are needed and the required amount of signatures \textit{N} to allow to redeem from the address need to be given. \textit{M-of-N} multisignature P2SH addresses owned by $\{X_{pk}, Y_{pk}\}$ will be denoted as \(XY_{adr}^{m/2}\) from now on. \par
 The Bitcoin scripting language provides operators which can be applied to created transaction scripts. The OP\_CHECKMULTISIG operators for multisig verification makes it possible to verify a generated transaction script for the content before it is broadcasted. \par
 
 \subsection{Ricardian Contracts}
 
 A Ricardian contract is designed to register a legally binding digital document to a specific object \cite{grigg2004ricardian}. The contract puts all information in a format which is parsable by software and humans. It represents a legal agreement between individuals and a protocol for integrating the agreement securely within a infrastructure. \par
 The Ricardian contract can be used to form an agreement by forming the liability when trading with another party. It can represent a unit of goods or service and uses signed agreement between the parties which cannot be falsified once signed. \par
-Just as smart contracts \cite{sc} they can achieve taking out of the middle man in contract construction, execution and enforcement. A Ricardian contract is acceptable within the existing legislation frameworks.
+Similar to smart contracts \cite{buterin2014next} Ricardian Contracts can achieve taking out the middle man in contract construction, execution and enforcement. A Ricardian contract is acceptable within the existing legislation frameworks.
 
 \subsection{Decentralized Marketplace}
 
