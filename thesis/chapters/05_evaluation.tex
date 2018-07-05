@@ -97,11 +97,11 @@ Possible malicious behaviour at object drop-off exchange:
   \begin{enumerate}
     \item Signing $tx_3$
     \begin{enumerate}
-      \item Wrong amount ($\{Ev, Tr\}$)
-      \item No signature from start address ($BC_{adr}^{2/2}$)
+      \item Wrong amount ($\{tx_1, tx_2\}$)
+      \item No signature from start address ($\{tx_1, tx_2\}^{1/2}$)
       \item Wrong endpoint address ($C_{adr}$)
     \end{enumerate}
-    \[\{\{Ev, Tr\}, BC_{adr}^{2/2}, C_{adr}\}\not\in tx_3\]
+    \[\{\{tx_1, tx_2\}^{1/2}, BC_{adr}^{2/2}, C_{adr}\}\not\in tx_3\]
     \item Ricardian Contract
     \begin{enumerate}
       \item Giving wrong dropoff exchange information in $Rc$
@@ -118,7 +118,7 @@ Possible malicious behaviour at object drop-off exchange:
 \noindent\textbf{1.b.ii.} Depending on content it might be prevented by chosen packaging, but will not be prevented through incentive mechanism. \par
 
 \noindent\textbf{2.a.} $C$ can verify the content of the $tx_3$
-\[VerifyTransaction(Rc, tx_3)\colon\{Ev, Tr, B_{adr}\} \in Rc \land \{Tr, A_{adr}, BC_{adr}^{2/2}\} \in tx_2\]
+\[VerifyTransaction(Rc, tx_3)\colon\{Ev, Tr, B_{adr}\} \in Rc \land \{\{tx_1, tx_2\}^{1/2}, BC_{adr}^{2/2}, C_{adr}\} \in tx_3\]
 \noindent\textbf{2.b.i.} $C$ can keep package or return to $A$.\par
 \noindent\textbf{2.b.ii.} If $B$ does not agree with content he will not sign to release the escrow. $C$ can keep package or return to $A$.\par
 
