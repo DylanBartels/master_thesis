@@ -5,7 +5,7 @@ The gig economy is in full effect, individual actors get paid for the execution 
 % The relevancy of your research,
 Recent successful technical innovations have been due to a shift from centralization to peer-to-peer services, examples of these are Uber, Airbnb and Kickstarter. In the domain of supply chain logistics this innovation has been lacking. O. Gallay et al. \cite{peer-to-peerDecentralizedLogistics} have proposed a peer-to-peer framework supporting interoperability between different actors in the logistics chains. This research lacks insight related to trust, network and technical implementation but establishes interest in the domain regarding implementation. \par
 According to N. Hackius et al. \cite{hackius2017blockchain} surveys in the logistics domain show that there is a clear demand on what blockchain technology can realistically do for the domain. \par
-With the recent progression in the domain of trustless value transference, research towards the applicability of this in the supply chain offers relevancy. In \cite{trustlessIntermediationInBCServiceMarket} M. Klems et al. have formulated possible implementation of trustless intermediation in blockchain based decentralized service marketplaces. The research topic arises if this or other intermediation solutions can also be applied to peer-to-peer logistics marketplaces and to which degree will there be a custodian in the process due to it including transferring a physical asset.
+With the recent progression in the domain of trustless value transference, research towards the applicability of this in the supply chain offers relevancy. In \cite{trustlessIntermediationInBCServiceMarket} M. Klems et al. have formulated possible implementation of trustless intermediation in blockchain based decentralized service marketplaces. The research topic arises if this or other intermediation solutions can also be applied to peer-to-peer logistics marketplaces and to which degree will there be a custodian in the process due to it including transferring a physical object.
 
 \subsection{Problem Statement}
 
@@ -28,7 +28,7 @@ However reputation loss might not be the only incentive available to achieve tra
 % \noindent For the following subquestions marketplace is defined as a trustless decentralized peer-to-peer marketplace for transportation of goods.
 \begin{itemize}
   \item Can trustless intermediation exists on this marketplace without centralized dispute resolution?
-  \item How decentralized is the mechanism?
+  % \item How decentralized is the mechanism?
   \item To what degree do oracles play a role in the verification of the information?
   \item What level of anonymity is possible?
   \item Which attack vectors are possible to undermine this mechanism?
@@ -38,10 +38,10 @@ However reputation loss might not be the only incentive available to achieve tra
 
 \subsubsection{Solution Outline}
 
-Our solution uses a digital representation of the transport contract which includes the begin address, end address and the end address public key. This contracts will be tied to the owner of the physical object which is intended to be transported with the process. When the transport actor is custodian of transporting the asset an equivalent value or more will be put in escrow which can be unlocked by the endpoint actor. The setup incentivizes for the transport actor to move the asset to the endpoint else losing the escrow equivalent value. \par
+Our solution uses a digital representation of the transport contract which includes the begin address, end address and the end address public key. This contracts will be tied to the owner of the physical object which is intended to be transported with the process. When the transport actor is custodian of transporting the object an equivalent value or more will be put in escrow which can be unlocked by the endpoint actor. The setup incentivizes for the transport actor to move the object to the endpoint else losing the escrow equivalent value. \par
 We chose to implement the escrow on the Bitcoin network due to it being well tested and offering a baseline environment in the decentralized domain.
 % None specific cryptocurrency for escrow
-% marketplace orderbook orders consist out of transport coordinates and asset being transported. Ownership of this translate to ownership in the physical domain.
+% marketplace orderbook orders consist out of transport coordinates and object being transported. Ownership of this translate to ownership in the physical domain.
 % todo: figure
 
 % \subsubsection{Why Blockchain?}
