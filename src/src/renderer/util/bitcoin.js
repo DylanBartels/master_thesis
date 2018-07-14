@@ -8,7 +8,7 @@ export function buildTransaction (privateKey, address, utxo) {
   txb.addInput(utxo['txid'], utxo['vout'])
   // Add the output (who to pay to):
   // [payee's address, amount in satoshis]
-  txb.addOutput(address, (utxo['satoshis'] - 2000))
+  txb.addOutput(address, (utxo['satoshis'] - 5000))
   // Initialize a private key using WIF
   const keyPair = bitcoin.ECPair.fromWIF(privateKey)
 
@@ -45,7 +45,7 @@ export function buildMultiSigTransaction (privateKey, firstPublicKey, secondPubl
     txb.addInput(utxoTransport['txid'], 0, null, scriptPubKey)
 
     // todo: change output address to correspond to utxoEquivalent
-    txb.addOutput('1Nc1e6PykezzvtUBZmyb7Gbm3DvN8K8bQs', ((utxoEquivalent['satoshis'] + utxoTransport['satoshis']) - 2000))
+    txb.addOutput('1Nc1e6PykezzvtUBZmyb7Gbm3DvN8K8bQs', ((utxoEquivalent['satoshis'] + utxoTransport['satoshis']) - 5000))
 
     // Initialize a private key using WIF
     const keyPair = bitcoin.ECPair.fromWIF(privateKey)
@@ -130,5 +130,6 @@ export function getBalance (bitcoinAddress) {
 }
 
 export function postTransactionScript (hexTX) {
+  console.log(hexTX)
   axios.post('https://insight.bitpay.com/api/tx/send', {'rawtx': hexTX})
 }

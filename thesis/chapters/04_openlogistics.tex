@@ -1,5 +1,5 @@
 In this chapter we describe OpenLogistics\footnote{\url{https://www.github.com/DylanBartels/master_thesis/src}}, the created decentralized marketplace proof of concept for facilitating trustless transport contracts. OpenLogistics uses the Bitcoin main network for the multisig trustless intermediation mechanism, the distributed data storage bigchaindb to store legally binding liability Ricardian contracts and the software client aggregates the contracts and facilitates the interaction. \par
-To analyze the obtained result of OpenLogistics three roles which can interact with the mechanism will be defined. Every role owns a Bitcoin and BigchainDB keypair once interacting with the software client. The roles which interact with the mechanism are the following:
+To analyse the obtained result of OpenLogistics three roles which can interact with the mechanism will be defined. Every role owns a Bitcoin and BigchainDB keypair once interacting with the software client. The roles which interact with the mechanism are the following:
 \begin{itemize}
   \item Service consumer
   \item Endpoint actor
@@ -11,7 +11,7 @@ The \textbf{service provider} can acces the OpenLogistics marketplace order-book
 
 \subsection{Transparency}
 
-Due to the inherit transparancy of the Blockchain it is possible to see the interaction between OpenLogistics and the network. A example testrun of the mechanism can be seen locally, if a Blockchain copy is present, or through commonly used block explorers\footnote{\url{https://www.blocktrail.com/BTC}}
+Due to the inherit transparency of the Blockchain it is possible to see the interaction between OpenLogistics and the network. A example testrun of the mechanism can be seen locally, if a Blockchain copy is present, or through commonly used block explorers\footnote{\url{https://www.blocktrail.com/BTC}}
  by searching on the addresses found in Table \ref{tab:addresses}.
 
 \begin{table}[h]
@@ -33,7 +33,7 @@ The transferring of Ricardian Contract ownership can be seen by exploring bigcha
 \subsection{Advantages \& Disadvantages}
 
 The advantage of the facilitated mechanism of OpenLogistics is that if all actors agree upon the set rules in the Ricardian Contract \textit{anybody} can participate. We chose to implement the payment and escrow mechanism on the Bitcoin network, which is in the blockchain domain perceived as simpler and less vulnerable in terms of incentive structure than other networks. \par
-The downside of the Bitcoin network is that the average blocktime is 10 minutes, which is not consistant which can create long waiting periods when the pickup exchange is taking place. An anomly example of a 1 hour blocktime can be found in appendix C. Other blockchain alternatives can be chosen depending as long as they support multisignature. Another disadvantage of the structure is that you have to spend three transaction fees to make the mechanism work, price fluctuations of the Bitcoin price can disrubt the mechanism.\par
+The downside of the Bitcoin network is that the average block-time is 10 minutes, this inconsistency can create long waiting periods when the pickup exchange is taking place. An anomaly example of a 1 hour block-time can be found in appendix C. Other blockchain alternatives can be chosen depending as long as they support multisignature. Another disadvantage of the structure is that you have to spend three transaction fees to make the mechanism work, price fluctuations of the Bitcoin price can disrupt the mechanism.\par
 We chose to implement the OpenLogistics client with Javascript libraries which can easily be developed towards mobile. We assumed with the proof of concept that the actor keypair is bounded to a physical location. The signing of the transactions takes place in the actors local client resulting in the actor his private key never leaving the software client bounded physical location.
 
 \subsection{Claim}

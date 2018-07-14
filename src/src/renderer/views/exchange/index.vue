@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row>
-      <h3>I am pickup</h3>
+      <h3>Service Consumer Role</h3>
       <el-table :data="myPickup"
                 element-loading-text="Loading"
                 fit
@@ -70,7 +70,7 @@
     </el-row>
 
     <el-row>
-      <h3>I am dropoff</h3>
+      <h3>Endpoint Actor Role</h3>
       <el-table :data="myDropoff"
                 element-loading-text="Loading"
                 fit
@@ -132,7 +132,7 @@
     </el-row>
 
     <el-row>
-      <h3>I am transporting</h3>
+      <h3>Service Provider Role</h3>
       <el-table :data="myTransport"
                 element-loading-text="Loading"
                 fit
@@ -241,7 +241,7 @@
     methods: {
       onExchangePickup () {
         this.$confirm('This will broadcast the equivalent cost transaction, ' +
-          'transport cost transaction and change ownership of the digital asset. Continue?', 'Warning', {
+          'transport cost transaction and change ownership of the Ricardian Contract. Continue?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'warning'
@@ -314,12 +314,13 @@
           this.currentRow.data.dropoff.public_key,
           this.transport.transactionScript
         ).then(response => {
-          this.$confirm('Contract redeemed and payment send! You can follow the transaction: ' +
-            response + postTransactionScript(response), 'Warning', {
+          this.$confirm('Confirming will redeem the following transaction: ' +
+            response, 'Warning', {
             confirmButtonText: 'OK',
             cancelButtonText: 'Cancel',
             type: 'warning'
           }).then(() => {
+            postTransactionScript(response)
             this.$message({
               type: 'success',
               message: 'Redeem completed'
